@@ -118,14 +118,21 @@ public class AircraftModelController : MonoBehaviour
         initFlapAngle = flaps[0].localEulerAngles.x;
         initRudderAngle = rudders[0].localEulerAngles.z;
         initElevatorAngle = elevators[0].localEulerAngles.x;
-        initBrakeAngle = airBrake.localEulerAngles.x;
-        initBrakeRodAngle = airBrakeRod.localEulerAngles.z;
-        brakeValue = 0;
-        brakeStatus = 0;
+
+        if(airBrake != null)
+        {
+            initBrakeAngle = airBrake.localEulerAngles.x;
+            initBrakeRodAngle = airBrakeRod.localEulerAngles.z;
+            brakeValue = 0;
+            brakeStatus = 0;
+        }
     }
 
     void Update()
     {
+        if(airBrake == null)
+            return;
+        
         brakeValue = Mathf.Lerp(brakeValue, brakeStatus, brakeLerpAmount * Time.deltaTime);
 
         // Air Brake

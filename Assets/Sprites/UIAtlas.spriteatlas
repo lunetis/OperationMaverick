@@ -86,6 +86,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: f77061c8e181de844b6111c2dcc6d78e, type: 3}
   - {fileID: 21300000, guid: 014b66c863dc8e040ac51d133aae14ff, type: 3}
   - {fileID: 21300000, guid: 148878c88a6edf642a4a5e0e1dfba395, type: 3}
+  - {fileID: 21300000, guid: 5c944fd88477c97419594d1d949b8a1d, type: 3}
   - {fileID: 21300000, guid: 929d1649ddcbe5e4289a53318a0ec3ef, type: 3}
   - {fileID: 21300000, guid: 1aa54589886f7b14189059492f6671f7, type: 3}
   - {fileID: 21300000, guid: 8d1d2be9d5b3f3c49987cbb4532e2bf9, type: 3}
@@ -128,6 +129,7 @@ SpriteAtlas:
   - Map_Large
   - Side Edge
   - QAAM Frame
+  - FA-18 Wireframe
   - Destroyed
   - HUD Center
   - Altitude Edge

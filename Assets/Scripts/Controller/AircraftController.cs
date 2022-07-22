@@ -87,6 +87,9 @@ public class AircraftController : MonoBehaviour
     float speedReciprocal;
     Vector3 rotateReciprocal;
 
+    [SerializeField]
+    TrailRenderer[] trails;
+
     // Controllers
     CameraController cameraController;
     UIController uiController;
@@ -330,6 +333,17 @@ public class AircraftController : MonoBehaviour
         modelController.SetBrakeStatus(brakeValue > 0.9f);
     }
 
+    void TrailControl()
+    {
+        if(trails != null && trails.Length > 0)
+        {
+            foreach(var trail in trails)
+            {
+                trail.emitting = (pitchValue != 0);
+            }
+        }
+    }
+
     void OnDisable()
     {
         foreach(JetEngineController jet in jetEngineControllers)
@@ -394,6 +408,7 @@ public class AircraftController : MonoBehaviour
         JetEngineControl();
 
         ModelControl();
+        TrailControl();
     }
     
     void FixedUpdate()
