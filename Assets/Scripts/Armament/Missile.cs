@@ -4,22 +4,27 @@ using UnityEngine;
 
 public class Missile : MonoBehaviour
 {
-    Transform parent;
-    Rigidbody rb;
+    protected Transform parent;
+    protected Rigidbody rb;
 
-    TargetObject target;
-    float speed;
+    protected TargetObject target;
+    protected float speed;
     public string missileName;
+
+    public bool isLockable = true;
 
     [Header("Properties")]
 
     [SerializeField]
-    float damage;
+    protected float damage;
 
     public bool isSpecialWeapon;
     public float maxSpeed;
     public float accelAmount;
     public float turningForce;
+
+    
+    public float additionalReleaseSpeed = 15;
 
     [SerializeField]
     [Range(0, 1)]
@@ -37,6 +42,8 @@ public class Missile : MonoBehaviour
     public float cooldown;
     public int payload;
 
+    public int maxActivePayload = 2;
+
     // UI
     [Header("UI")]
     public Sprite missileFrameSprite;
@@ -47,13 +54,16 @@ public class Missile : MonoBehaviour
     GameObject smokeTrailEffect;
     public Transform smokeTrailPosition;
 
-    bool isHit = false;
-    bool isDisabled = false;
-    bool hasWarned = false;
+    protected bool isHit = false;
+    protected bool isDisabled = false;
+    protected bool hasWarned = false;
 
     // Prediction
-    AudioSource audioSource;
-    Rigidbody targetRigidbody = null;
+    protected AudioSource audioSource;
+    protected Rigidbody targetRigidbody = null;
+    
+    [Tooltip("If null, plays default missile launch audio clip (Can be found at SoundManager)")]
+    public AudioClip launchAudio;
 
     public bool HasWarned
     {
@@ -90,6 +100,11 @@ public class Missile : MonoBehaviour
         Invoke("DisableMissile", lifetime);
     }
 
+    public virtual void Launch(Vector3 guidedPosition, float launchSpeed, int layer, GameObject launcher)
+    {
+        
+    }
+
     Vector3 GetPredictedTargetPosition()
     {
         if(targetRigidbody == null) return target.transform.position;
@@ -113,7 +128,7 @@ public class Missile : MonoBehaviour
         return predictedPos;
     }
 
-    void LookAtTarget()
+    protected virtual void LookAtTarget()
     {
         if(target == null)
             return;
@@ -153,7 +168,7 @@ public class Missile : MonoBehaviour
         DisableMissile();
     }
 
-    void Explode()
+    protected void Explode()
     {
         // Instantiate in world space
         GameObject effect = GameManager.Instance.explosionEffectObjectPool.GetPooledObject();
@@ -190,7 +205,7 @@ public class Missile : MonoBehaviour
         DisableMissile();
     }
 
-    void DisableMissile()
+    protected virtual void DisableMissile()
     {
         hasWarned = false;
         
@@ -210,7 +225,7 @@ public class Missile : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    void ShowMissedLabel()
+    protected void ShowMissedLabel()
     {
         if(gameObject.layer == LayerMask.NameToLayer("Player"))
         {
@@ -236,7 +251,7 @@ public class Missile : MonoBehaviour
     }
     
 
-    private void OnDisable()
+    void OnDisable()
     {
         if(smokeTrailEffect != null)
         {

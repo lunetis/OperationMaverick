@@ -21,6 +21,8 @@ public class WeaponController : MonoBehaviour
     Transform leftMissileTransform;
     [SerializeField]
     Transform rightMissileTransform;
+    [SerializeField]
+    Transform centerMissileTransform;
 
     // Missile
     [Header("Missile")]
@@ -42,6 +44,8 @@ public class WeaponController : MonoBehaviour
     string specialWeaponName;
     int specialWeaponCnt;
     float spwCooldownTime;
+    
+    public MonoBehaviour specialWeaponScript;
     
     // Machine Gun
     [Header("Machine Gun")]
@@ -85,6 +89,7 @@ public class WeaponController : MonoBehaviour
 
     AircraftController aircraftController;
     UIController uiController;
+
 
     public Transform GunTransform
     {
@@ -302,35 +307,62 @@ public class WeaponController : MonoBehaviour
 
         Vector3 missilePosition;
         
-        // Select Launch Position
-        if(weaponCnt % 2 == 1)
-        {
-            missilePosition = rightMissileTransform.position;
-        }
-        else
-        {
-            missilePosition = leftMissileTransform.position;
-        }
-        
         // Start Cooldown
         availableWeaponSlot.StartCooldown();
 
         // Get from Object Pool and Launch
         GameObject missile = objectPool.GetPooledObject();
+        Missile missileScript = missile.GetComponent<Missile>();
+        
+        // Select Launch Position
+        if(missileScript.maxActivePayload == 1)
+        {
+            missilePosition = centerMissileTransform.position;
+        }
+        else
+        {
+            if(weaponCnt % 2 == 1)
+            {
+                missilePosition = rightMissileTransform.position;
+            }
+            else
+            {
+                missilePosition = leftMissileTransform.position;
+            }
+        }
+
         missile.transform.position = missilePosition;
         missile.transform.rotation = transform.rotation;
         missile.SetActive(true);
 
-        Missile missileScript = missile.GetComponent<Missile>();
         TargetObject targetObject = (target != null && GameManager.TargetController.IsLocked == true) ? target : null;
-        missileScript.Launch(targetObject, aircraftController.Speed + 15, gameObject.layer);
+
+        // Lockable: Launch(TargetObject, ...)
+        // else: Launch(GuidedPosition, ...)
+        if(missileScript.isLockable == true)
+        {
+            missileScript.Launch(targetObject, aircraftController.Speed + missileScript.additionalReleaseSpeed, gameObject.layer);
+        }
+        else
+        {
+            Vector3 forwardPosition = transform.position + transform.forward * 100;
+            missileScript.Launch(forwardPosition, aircraftController.Speed + missileScript.additionalReleaseSpeed, gameObject.layer, gameObject);
+        }
+        
         
         weaponCnt--;
 
         uiController.SetMissileText(missileCnt);
         uiController.SetSpecialWeaponText(specialWeaponName, specialWeaponCnt);
         
-        missileAudioSource.PlayOneShot(SoundManager.Instance.GetMissileLaunchClip());
+        if(missileScript.launchAudio != null)
+        {
+            missileAudioSource.PlayOneShot(missileScript.launchAudio);
+        }
+        else
+        {
+            missileAudioSource.PlayOneShot(SoundManager.Instance.GetMissileLaunchClip());
+        }
     }
 
 
@@ -340,6 +372,7 @@ public class WeaponController : MonoBehaviour
         {
             useSpecialWeapon = !useSpecialWeapon;
             SetUIAndTarget();
+            specialWeaponScript.enabled = useSpecialWeapon;
         }
     }
 
