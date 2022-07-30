@@ -292,7 +292,16 @@ public class WeaponController : MonoBehaviour
         // Ammunition Zero!
         if(weaponCnt <= 0)
         {
-            if(voiceAudioSource.isPlaying == false)
+            int activeChildCnt = 0;
+            foreach(Transform child in objectPool.transform)
+            {
+                if(child.gameObject.activeSelf == true)
+                {
+                    activeChildCnt++;
+                }
+            }
+
+            if(voiceAudioSource.isPlaying == false && activeChildCnt == 0) 
             {
                 voiceAudioSource.PlayOneShot(ammunitionZeroClip);
             }

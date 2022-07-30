@@ -9,7 +9,7 @@ public class LaserGuidedBomb : Missile
     public float initialFallAmount = 4;
     public float lerpAmount = 1;
 
-    public GameObject guideDebugObject;
+    LaserGuidanceController laserGuidanceController;
 
     public override void Launch(Vector3 guidedPosition, float launchSpeed, int layer, GameObject launcher)
     {
@@ -20,7 +20,10 @@ public class LaserGuidedBomb : Missile
         speed = launchSpeed;
         gameObject.layer = layer;
 
-        launcher.GetComponent<LaserGuidanceController>().lgb = this;
+        laserGuidanceController = launcher.GetComponent<LaserGuidanceController>();
+        laserGuidanceController.lgb = this;
+
+        laserGuidanceController.ShowGuidanceUI();
     }
 
 
@@ -53,6 +56,7 @@ public class LaserGuidedBomb : Missile
             ShowMissedLabel();
         }
         
+        laserGuidanceController.HideGuidanceUI();
         isDisabled = true;
         transform.parent = parent;
         gameObject.SetActive(false);
@@ -67,7 +71,6 @@ public class LaserGuidedBomb : Missile
     {    
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
-        CancelInvoke();
     }
 
     void FixedUpdate()
@@ -80,8 +83,5 @@ public class LaserGuidedBomb : Missile
     {
         initialFallAmount = Mathf.Lerp(initialFallAmount, 0, lerpAmount * Time.deltaTime);
         transform.Translate(Vector3.down * initialFallAmount * Time.deltaTime);
-
-        Debug.Log(guidedPosition);
-        guideDebugObject.transform.position = guidedPosition;
     }
 }

@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class FollowTransformUI : MonoBehaviour
 {
-    [SerializeField]
-    protected Transform targetTransform;
+    public Transform targetTransform;
 
     [SerializeField]
     protected Camera cam;
