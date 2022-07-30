@@ -17,7 +17,7 @@
 
 ### TODO List:
 - [x] Change 3D Model to F/A-18
-- [ ] Laser-guided Bomb Implementation
+- [x] Laser-guided Bomb Implementation
 - [ ] UI for multiple enemies
 - [ ] Surface-to-Air Missile Implementation
 - [ ] Map Design
