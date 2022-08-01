@@ -20,6 +20,11 @@ public class EnemyWeaponController : MonoBehaviour
 
     TargetObject targetObject;
 
+    public TargetObject TargetObject
+    {
+        get { return targetObject; }
+    }
+
     // From Missile Data
     float targetSearchSpeed;
     float boresightAngle;
@@ -29,6 +34,12 @@ public class EnemyWeaponController : MonoBehaviour
     float lockProgress;
     bool isLocked;
     AircraftAI aircraftAI;
+
+    [SerializeField]
+    ObjectPool customMissileObjectPool = null;
+
+    [SerializeField]
+    Transform rotatableBody;
 
     void ResetLock()
     {
@@ -43,7 +54,7 @@ public class EnemyWeaponController : MonoBehaviour
 
     float GetAngleBetweenTransform(Transform otherTransform)
     {
-        Vector3 direction = transform.forward;
+        Vector3 direction = (rotatableBody != null) ? rotatableBody.forward : transform.forward;
         Vector3 diff = otherTransform.position - transform.position;
         return Vector3.Angle(diff, direction);
     }
@@ -104,6 +115,8 @@ public class EnemyWeaponController : MonoBehaviour
 
     void LaunchMissile()
     {
+        float initialSpeed = (aircraftAI != null) ? aircraftAI.Speed + 15 : 15;
+
         if(GameManager.Instance.IsGameOver == true)
         {
             CancelInvoke();
@@ -113,13 +126,23 @@ public class EnemyWeaponController : MonoBehaviour
         if(isLocked == false) return;
         
         // Get from Object Pool and Launch
-        GameObject missile = GameManager.Instance.enemyMissileObjectPool.GetPooledObject();
+        GameObject missile;
+        if(customMissileObjectPool != null)
+        {
+            missile = customMissileObjectPool.GetPooledObject();
+        }
+        else
+        {
+            missile = GameManager.Instance.enemyMissileObjectPool.GetPooledObject();
+        }
+        
         missile.transform.position = missileLaunchTransform.position;
-        missile.transform.rotation = transform.rotation;
+        missile.transform.rotation = missileLaunchTransform.rotation;
         missile.SetActive(true);
 
         Missile missileScript = missile.GetComponent<Missile>();
-        missileScript.Launch(targetObject, aircraftAI.Speed + 15, gameObject.layer);
+
+        missileScript.Launch(targetObject, initialSpeed, gameObject.layer);
     }
 
     void OnDisable()
@@ -136,7 +159,6 @@ public class EnemyWeaponController : MonoBehaviour
         InvokeRepeating("LaunchMissile", 1, fireCheckDelay);
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         boresightAngle = missile.boresightAngle;
