@@ -50,6 +50,9 @@ public class AlertUIController : MonoBehaviour
     AudioClip missileVoiceAlertClip;
     [SerializeField]
     AudioClip stallVoiceAlertClip;
+    
+    [SerializeField]
+    AudioClip cautionVoiceAlertClip;
 
     [SerializeField]
     AudioSource voiceAudioSource;
@@ -178,6 +181,23 @@ public class AlertUIController : MonoBehaviour
 
         damaged.SetActive(false);
     }
+    
+    public void SetCautionUI(bool enable)
+    {
+        if(caution.activeSelf == enable) return;
+        
+        caution.SetActive(enable);
+        if(enable == true)
+        {
+            InvokeRepeating("BlinkAttackAlertUI", 0, warningBlinkTime);
+            InvokeRepeating("PlayCautionVoiceAudio", 0, voiceAlertRepeatTime);
+        }
+        else
+        {
+            CancelInvoke();
+        }
+    }
+
 
     // Misc.
     void ShowAutopilotUI()
@@ -191,6 +211,7 @@ public class AlertUIController : MonoBehaviour
         if(GameManager.AircraftController.IsStalling != stalling.activeInHierarchy)
             stalling.SetActive(GameManager.AircraftController.IsStalling);
     }
+    
 
     void HideAllAttackAlertUI()
     {
@@ -261,7 +282,7 @@ public class AlertUIController : MonoBehaviour
                 CancelInvoke("PlayMissileBeepAudio");
                 CancelInvoke("PlayWarningBeepAudio");
                 InvokeRepeating("PlayMissileBeepAudio", 0, missileWarningAlertRepeatTime);
-                 if(isPlayingVoiceAlert == false) InvokeRepeating("PlayMissileVoiceAudio", 0, voiceAlertRepeatTime);
+                if(isPlayingVoiceAlert == false) InvokeRepeating("PlayMissileVoiceAudio", 0, voiceAlertRepeatTime);
                 break;
                 
             case PlayerAircraft.WarningStatus.MISSILE_ALERT:
@@ -300,6 +321,11 @@ public class AlertUIController : MonoBehaviour
     {
         isPlayingVoiceAlert = true;
         voiceAudioSource.PlayOneShot(missileVoiceAlertClip);
+    }
+
+    void PlayCautionVoiceAudio()
+    {
+        alertAudioSource.PlayOneShot(cautionVoiceAlertClip);
     }
 
     public void OnGameOver()

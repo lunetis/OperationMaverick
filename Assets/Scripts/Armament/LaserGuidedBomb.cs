@@ -32,28 +32,35 @@ public class LaserGuidedBomb : Missile
         Vector3 targetDir = guidedPosition - transform.position;
         float angle = Vector3.Angle(targetDir, transform.forward);
 
+        if(angle > boresightAngle)
+        {
+            return;
+        }
+
         Quaternion lookRotation = Quaternion.LookRotation(targetDir);
         rb.rotation = Quaternion.Slerp(rb.rotation, lookRotation, turningForce * Time.fixedDeltaTime);
     }
 
     void OnCollisionEnter(Collision other)
     {
-        // This line must be collision check
-        if(true)
-        {
-            isHit = true;
-        }
-
-        Explode();
+        Explode(20);
+        
         DisableMissile();
     }
 
     protected override void DisableMissile()
     {
         // Send Message to object that it is no more locked on
-        if(isDisabled == false && isHit == false)
+        if(isHit == false)
         {
             ShowMissedLabel();
+        }
+        else
+        {
+            if(gameObject.layer == LayerMask.NameToLayer("Player"))
+            {
+                GameManager.UIController.SetLabel(AlertUIController.LabelEnum.Destroyed);
+            }
         }
         
         laserGuidanceController.HideGuidanceUI();

@@ -37,6 +37,14 @@ public class RedTimer : MonoBehaviour
         }
     }
 
+    public int RemainTime_RedTimerOnly
+    {
+        set
+        {
+            remainTime = value;
+        }
+    }
+
     void SetTime()
     {
         remainTime -= Time.deltaTime;
@@ -93,6 +101,18 @@ public class RedTimer : MonoBehaviour
             remainTimeScripts.RemoveAll(script => removableScriptKeys.Contains(script.scriptKey));
             removableScriptKeys.Clear();
         }
+    }
+
+    void Disable()
+    {
+        gameObject.SetActive(false);
+    }
+
+    public void StopAndReserveDisable(float time)
+    {
+        CancelInvoke();
+
+        Invoke("Disable", time);
     }
 
     void Awake()

@@ -40,7 +40,10 @@ public class LaserGuidanceController : MonoBehaviour
 
     void OnDisable()
     {
-        scanUI?.SetActive(false);
+        if(scanUI == null)
+            return;
+
+        scanUI.SetActive(false);
     }
 
     public void ShowGuidanceUI()

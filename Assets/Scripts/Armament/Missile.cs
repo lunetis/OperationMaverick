@@ -65,6 +65,11 @@ public class Missile : MonoBehaviour
     [Tooltip("If null, plays default missile launch audio clip (Can be found at SoundManager)")]
     public AudioClip launchAudio;
 
+    public bool IsHit
+    {
+        set { isHit = value; }
+    }
+
     public bool HasWarned
     {
         get { return hasWarned; }
@@ -168,12 +173,13 @@ public class Missile : MonoBehaviour
         DisableMissile();
     }
 
-    protected void Explode()
+    protected void Explode(float explosionScale = 1)
     {
         // Instantiate in world space
         GameObject effect = GameManager.Instance.explosionEffectObjectPool.GetPooledObject();
         effect.transform.position = transform.position;
         effect.transform.rotation = transform.rotation;
+        effect.transform.localScale *= explosionScale;
         effect.SetActive(true);
     }
 

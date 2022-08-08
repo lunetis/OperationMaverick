@@ -147,8 +147,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 3
+  m_Radius: 0.3
+  m_Height: 2.5
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &5912097410664850787
@@ -164,9 +164,9 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 2
 --- !u!114 &2534475128896767696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,12 +183,12 @@ MonoBehaviour:
   isLockable: 0
   damage: 10
   isSpecialWeapon: 1
-  maxSpeed: 0
-  accelAmount: 0
-  turningForce: 1
+  maxSpeed: 200
+  accelAmount: 10
+  turningForce: 0.7
   additionalReleaseSpeed: -3
   smartTrackingRate: 0.3
-  boresightAngle: 0
+  boresightAngle: 90
   lifetime: 20
   targetSearchSpeed: 0
   lockDistance: 0
@@ -214,6 +214,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 42ec84ec71eb33e46bd8d4e9b512d4c8,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 42ec84ec71eb33e46bd8d4e9b512d4c8,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 42ec84ec71eb33e46bd8d4e9b512d4c8,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 42ec84ec71eb33e46bd8d4e9b512d4c8,
         type: 3}
