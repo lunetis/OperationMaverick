@@ -251,6 +251,37 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+    public void MissionAccomplish()
+    {
+        UIController.SetLabel(AlertUIController.LabelEnum.MissionAccomplished);
+
+        audioController.TargetBGMVolume = AudioController.MIN_VOLUME;
+
+        foreach(TargetObject obj in objects)
+        {
+            obj.DeleteMinimapSprite();
+        }
+
+        executeOnGameOver.Invoke();
+
+        targetController.RemoveAllTargetUI();
+        objects.Clear();
+        weaponController.ChangeTarget();
+
+        foreach(GameObject obj in disableOnGameOver)
+        {
+            obj.SetActive(false);
+        }
+
+        scriptManager.ClearScriptQueue(true);
+
+        ResultData.elapsedTime += GameManager.UIController.StopCountAndGetElapsedTime();
+        
+        float gameOverFadeOutDelay = 5.0f;
+        Invoke("GameOverFadeOut", gameOverFadeOutDelay);
+    }
+
     public void GameOver(bool isDead, bool isInstantDeath = false)
     {
         float gameOverFadeOutDelay = 5.0f;

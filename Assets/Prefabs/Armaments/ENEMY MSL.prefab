@@ -5033,6 +5033,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a47b8ef751ba9694eadcd3b781ddb367, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 0}
   missileName: MSL
   isLockable: 1
   damage: 10
@@ -5041,7 +5042,7 @@ MonoBehaviour:
   accelAmount: 70
   turningForce: 2
   additionalReleaseSpeed: 15
-  smartTrackingRate: 0.4
+  smartTrackingRate: 0.6
   boresightAngle: 90
   lifetime: 5
   targetSearchSpeed: 75

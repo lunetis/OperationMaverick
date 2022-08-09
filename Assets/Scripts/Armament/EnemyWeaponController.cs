@@ -41,6 +41,10 @@ public class EnemyWeaponController : MonoBehaviour
     [SerializeField]
     Transform rotatableBody;
 
+    [SerializeField]
+    [Range(0, 1)]
+    float fireDelayRandomizeAmount = 0;
+
     void ResetLock()
     {
         isLocked = false;
@@ -169,6 +173,7 @@ public class EnemyWeaponController : MonoBehaviour
         ResetLock();
 
         targetObject = GameManager.PlayerAircraft;
+        fireCheckDelay += fireCheckDelay * Random.Range(0, fireDelayRandomizeAmount);
     }
 
     // Update is called once per frame

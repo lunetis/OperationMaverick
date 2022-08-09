@@ -4022,7 +4022,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6927836058928705861}
   m_LocalRotation: {x: 0.2088327, y: 0.058392495, z: 0.098091066, w: -0.9712659}
-  m_LocalPosition: {x: -2.76, y: 4.47, z: 4.54}
+  m_LocalPosition: {x: -3.01, y: 5.89, z: 7.63}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4571,6 +4571,7 @@ MonoBehaviour:
   fireCheckDelay: 2.5
   customMissileObjectPool: {fileID: 0}
   rotatableBody: {fileID: 6927836059389239511}
+  fireDelayRandomizeAmount: 0.5
 --- !u!114 &7846950472419078246
 MonoBehaviour:
   m_ObjectHideFlags: 0

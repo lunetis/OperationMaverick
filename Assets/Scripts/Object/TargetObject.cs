@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class TargetObject : MonoBehaviour
 {
@@ -55,6 +56,8 @@ public class TargetObject : MonoBehaviour
         get { return isOnMissleAlert; }
         set { isOnMissleAlert = value; }
     }
+
+    public UnityEvent destroyActions;
 
     // Public Functions
     public virtual void OnDamage(float damage, int layer, string tag = "")
@@ -169,6 +172,8 @@ public class TargetObject : MonoBehaviour
             }
         }
         DeleteMinimapSprite();
+        
+        destroyActions.Invoke();
     }
 
     protected virtual void DestroyObject()

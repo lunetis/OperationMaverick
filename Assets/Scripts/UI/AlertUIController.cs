@@ -194,7 +194,8 @@ public class AlertUIController : MonoBehaviour
         }
         else
         {
-            CancelInvoke();
+            CancelInvoke("BlinkAttackAlertUI");
+            CancelInvoke("PlayCautionVoiceAudio");
         }
     }
 
@@ -296,6 +297,7 @@ public class AlertUIController : MonoBehaviour
                 CancelInvoke("PlayMissileBeepAudio");
                 CancelInvoke("PlayMissileVoiceAudio");
                 InvokeRepeating("PlayWarningBeepAudio", missileCautionAlertRepeatTime * 0.2f, missileCautionAlertRepeatTime);
+                isPlayingVoiceAlert = false;
                 break;
                 
             case PlayerAircraft.WarningStatus.NONE:

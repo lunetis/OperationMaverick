@@ -4,10 +4,23 @@ using UnityEngine;
 
 public class MissionMaverick : MissionManager
 {
+    enum CanyonStatus
+    {
+        NOT_ENTERED,
+        ENTERED,
+        LEAVED
+    }
+
     public float canyonEnterPositionZ;
     public float canyonLeavePositionZ;
     public float warningAltitude;
     public float failAltitude;
+
+    public float phase2BombingLeaveAltitude = 2640;
+
+    bool hasSAMsActivated;
+
+    CanyonStatus canyonStatus;
 
     
     [SerializeField]
@@ -19,14 +32,46 @@ public class MissionMaverick : MissionManager
     [SerializeField]
     int timeLimit;
 
-    bool isInCanyon;
+    [SerializeField]
+    GameObject[] SAMs;
+
+    List<EnemyWeaponController> SAMControllers;
+    List<SAM> SAMScripts;
+
+    [SerializeField]
+    GameObject[] enemyAircrafts;
+
+    int remainingEnemyAircraftCnt;
+
+    [SerializeField]
+    Transform firstEnemyWaypoint;
+
+    [SerializeField]
+    [Tooltip("DEBUG only")]
+    int initialPhase = 1;
 
     protected override void Start()
     {
-        phase = 1;
-        isInCanyon = false;
+        phase = initialPhase;
+        canyonStatus = CanyonStatus.NOT_ENTERED;
+
+        SAMControllers = new List<EnemyWeaponController>(SAMs.Length);
+        SAMScripts = new List<SAM>(SAMs.Length);
+
+        foreach(var SAM in SAMs)
+        {
+            SAMControllers.Add(SAM.GetComponent<EnemyWeaponController>());
+            SAMScripts.Add(SAM.GetComponent<SAM>());
+        }
+
+        SetSAMsActive(false);
+        SetEnemyAircraftsActive(false);
+
+        remainingEnemyAircraftCnt = enemyAircrafts.Length;
+
         base.Start();
     }
+
 
     void CheckAltitude(Vector3 playerPos)
     {
@@ -49,19 +94,57 @@ public class MissionMaverick : MissionManager
         }
     }
 
+    public void CheckBombing(bool isHit)
+    {
+        StopTimer();
+
+        // Fail
+        if(isHit == false)
+        {
+            GameManager.Instance.GameOver(false);
+        }
+        // Success: proceed
+        else
+        {
+            phase = 2;
+        }
+    }
+
+    void SetSAMsActive(bool active)
+    {
+        hasSAMsActivated = active;
+        foreach(var controller in SAMControllers)
+        {
+            controller.enabled = active;
+        }
+        foreach(var script in SAMScripts)
+        {
+            script.enabled = active;
+        }
+    }
+
+    void SetEnemyAircraftsActive(bool active)
+    {
+        foreach(var enemy in enemyAircrafts)
+        {
+            enemy.SetActive(active);
+            enemy.GetComponent<EnemyAircraft>().ForceChangeWaypoint(firstEnemyWaypoint.position);
+        }
+    }
+
 
     void CheckPhase1()
     {
         Vector3 playerPos = GameManager.PlayerAircraft.transform.position;
 
-        if(isInCanyon == false && canyonEnterPositionZ < playerPos.z)
+        if(canyonStatus == CanyonStatus.NOT_ENTERED && canyonEnterPositionZ < playerPos.z)
         {
-            isInCanyon = true;
+            canyonStatus = CanyonStatus.ENTERED;
             redTimer.RemainTime_RedTimerOnly = timeLimit;
             redTimer.gameObject.SetActive(true);
         }
 
-        if(isInCanyon == true)
+        if(canyonStatus == CanyonStatus.ENTERED)
         {
             // Altitude Restriction
             if(playerPos.z < canyonLeavePositionZ)
@@ -70,17 +153,45 @@ public class MissionMaverick : MissionManager
             }
             else
             {
-                isInCanyon = false;
-                phase = 2;
+                canyonStatus = CanyonStatus.LEAVED;
+                alertUIController.SetCautionUI(false);
             }
         }
     }
 
+public void DecreaseEnemyAircraftCnt()
+{
+    remainingEnemyAircraftCnt--;
+
+    // Some additional voice comms can be added
+
+    if(remainingEnemyAircraftCnt == 0)
+    {
+        GameManager.Instance.MissionAccomplish();
+    }
+}
+
     void CheckPhase2()
     {
-        redTimer.enabled = false;
+        if(hasSAMsActivated == false && GameManager.PlayerAircraft.transform.position.y > phase2BombingLeaveAltitude)
+        {
+            SetSAMsActive(true);
+            SetEnemyAircraftsActive(true);
+            hasSAMsActivated = true;
+        }
     }
 
+    void StopTimer()
+    {
+        redTimer.enabled = false;
+
+        Invoke("RemoveTimer", 3);
+    }
+
+    void RemoveTimer()
+    {
+        redTimer.gameObject.SetActive(false);
+    }
 
     void Update()
     {

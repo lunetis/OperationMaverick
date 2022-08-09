@@ -50,6 +50,8 @@ public class LaserGuidedBomb : Missile
 
     protected override void DisableMissile()
     {
+        SetMissionStatus(isHit);
+        
         // Send Message to object that it is no more locked on
         if(isHit == false)
         {
@@ -67,6 +69,13 @@ public class LaserGuidedBomb : Missile
         isDisabled = true;
         transform.parent = parent;
         gameObject.SetActive(false);
+    }
+    
+    void SetMissionStatus(bool hit)
+    {
+        MissionMaverick mission = (MissionMaverick)GameManager.MissionManager;
+
+        mission.CheckBombing(hit);
     }
 
     protected override void AdjustValuesByDifficulty()
