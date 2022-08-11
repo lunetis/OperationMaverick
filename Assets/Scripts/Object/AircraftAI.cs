@@ -88,15 +88,21 @@ public class AircraftAI : TargetObject
 
     Rigidbody rb;
 
+    int layerMask;
+
     public float Speed
     {
         get { return speed; }
     }
 
-    public void ForceChangeWaypoint(Vector3 waypoint)
+    public void ForceChangeWaypoint(Vector3 waypoint, bool changeToPlayer = false)
     {
         currentWaypoint = waypoint;
-        Invoke("Phase3ChangeWaypoint", 0.5f);
+
+        if(changeToPlayer == true)
+        {
+            Invoke("Phase3ChangeWaypoint", 0.5f);
+        }
     }
 
     void Phase3ChangeWaypoint()
@@ -145,7 +151,7 @@ public class AircraftAI : TargetObject
 
         if(hit.distance != 0)
         {
-            waypointPosition.y += height - hit.distance;
+            waypointPosition.y = (5000 - hit.distance) + height;
         }
         // New waypoint is below ground
         else
@@ -178,14 +184,26 @@ public class AircraftAI : TargetObject
         RaycastHit hit;
         Physics.Raycast(raycastPosition, Vector3.down, out hit);
 
+        // New waypoint is above the ground
         if(hit.distance != 0)
         {
-            waypointPosition.y += height - (5000 - hit.distance);
+            waypointPosition.y = (5000 - hit.distance) + height;
         }
-        // New waypoint is outside of the map
+        // New waypoint is below the ground or outside of the map
         else
         {
-            waypointPosition.y = height;
+            Physics.Raycast(waypointPosition, Vector3.up, out hit);
+            
+            // outside of the map (sea)
+            if(hit.distance == 0)
+            {
+                waypointPosition.y = height;
+            }
+            // Below the ground
+            else
+            {
+                waypointPosition.y += height + hit.distance;
+            }
         }
 
         return waypointPosition;
@@ -245,6 +263,21 @@ public class AircraftAI : TargetObject
         prevWaypointDistance = waypointDistance;
     }
 
+void CheckGroundCollision()
+{
+    RaycastHit hit;
+    Physics.Raycast(transform.position, transform.forward, out hit, 200, layerMask);
+    if(hit.distance > 0)
+    {
+        ForceChangeWaypoint(transform.position + Vector3.up * 50);
+        
+        // Quick Turn
+        currentTurningForce = 2.5f;
+        turningTime = 1 / currentTurningForce;
+        currentTurningTime = turningTime;
+    }
+}
+
     void Rotate()
     {
         if(currentWaypoint == Vector3.zero)
@@ -299,6 +332,7 @@ public class AircraftAI : TargetObject
     void Move()
     {
         rb.velocity = transform.forward * speed;
+        rb.angularVelocity = Vector3.zero;
     }
 
     void JetEngineControl()
@@ -331,6 +365,7 @@ public class AircraftAI : TargetObject
     {
         base.Start();
 
+        layerMask = 1 << LayerMask.NameToLayer("Ground");
         rb = GetComponent<Rigidbody>();
 
         speed = targetSpeed = defaultSpeed;
@@ -360,6 +395,7 @@ public class AircraftAI : TargetObject
         CheckWaypoint();
         JetEngineControl();
         CheckMissileDistance();
+        CheckGroundCollision();
 
         if(waypointChangeDelay > 0) waypointChangeDelay -= Time.deltaTime;
     }

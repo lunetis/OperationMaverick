@@ -37605,8 +37605,6 @@ MonoBehaviour:
     scriptKey: A3_T2
   - time: 60
     scriptKey: A3_T1
-  - time: 60
-    scriptKey: P3_T1
   beepSingleClip: {fileID: 8300000, guid: 4c4cdca661d64e64dbcf8d80c62c9ffb, type: 3}
   beepDoubleClip: {fileID: 8300000, guid: 6be5059f5cae9b947ba7d94cf6df5346, type: 3}
 --- !u!224 &551657326
@@ -50069,7 +50067,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 756678098}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 180, y: 100, z: -10705.91}
+  m_LocalPosition: {x: 180, y: 100, z: -11000}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

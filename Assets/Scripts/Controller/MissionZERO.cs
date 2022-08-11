@@ -171,7 +171,7 @@ public class MissionZERO : MissionManager
         GameManager.AircraftController.transform.SetPositionAndRotation(phase3CipherTransform.position, phase3CipherTransform.rotation);
         pixy.transform.SetPositionAndRotation(phase3PixyTransform.position, phase3PixyTransform.rotation);
 
-        pixy.ForceChangeWaypoint(phase3CipherTransform.position);
+        pixy.ForceChangeWaypoint(phase3CipherTransform.position, true);
     }
 
     public void SetTimer()
