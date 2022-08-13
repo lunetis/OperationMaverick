@@ -1,6 +1,6 @@
 # Operation Maverick
 
-[![Video Label](http://img.youtube.com/vi/VNjDvzprKrM/0.jpg)](https://youtu.be/VNjDvzprKrM)
+[![Video Label](http://img.youtube.com/vi/XG-HUKuYXhg/0.jpg)](https://youtu.be/XG-HUKuYXhg)
 
 (YouTube Video Link: Current development status at 2022-08-13)
 
