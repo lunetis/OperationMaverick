@@ -18,24 +18,14 @@
 ### TODO List:
 - [x] Change 3D Model to F/A-18
 - [x] Laser-guided Bomb Implementation
-- [ ] UI for multiple enemies
-- [ ] Surface-to-Air Missile Implementation
-- [ ] Map Design
-- [ ] Mission Implementation
-- [ ] Transcript
+- [x] Surface-to-Air Missile Implementation
+- [x] Map Design
+- [x] Mission Implementation
+- [x] Transcript
 - [ ] Mission Cutscenes
 - [ ] Difficulty System
 - [ ] Main/Result Screen
 - [ ] Build Test
-
-<br>
-
-|Difficulty|Time limit|Enemy missile tracking performance|# of Enemy aircrafts|etc.|
-|------|---|---|---|---|
-|Easy|4:30|Normal|3|No bridges at the canyon|
-|Normal|3:30|Normal|5||
-|Hard|3:00|High|7|Low Player HP|
-|Maverick|2:15|High|10|Additional SAM|
 
 <br>
 
