@@ -98,6 +98,10 @@ public class AircraftAI : TargetObject
     public void ForceChangeWaypoint(Vector3 waypoint, bool changeToPlayer = false)
     {
         currentWaypoint = waypoint;
+        speed = targetSpeed = defaultSpeed;
+
+        // waypoint restriction
+        if(waypoint.y > waypointMaxHeight) waypoint.y = waypointMaxHeight;
 
         if(changeToPlayer == true)
         {

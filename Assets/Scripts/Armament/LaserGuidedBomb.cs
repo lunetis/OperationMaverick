@@ -11,6 +11,9 @@ public class LaserGuidedBomb : Missile
 
     LaserGuidanceController laserGuidanceController;
 
+    [SerializeField]
+    List<string> scriptsOnLaunch;
+
     public override void Launch(Vector3 guidedPosition, float launchSpeed, int layer, GameObject launcher)
     {
         minimapSprite.SetMinimapSpriteVisible(true);
@@ -24,6 +27,8 @@ public class LaserGuidedBomb : Missile
         laserGuidanceController.lgb = this;
 
         laserGuidanceController.ShowGuidanceUI();
+
+        GameManager.ScriptManager.AddScriptRandomly(scriptsOnLaunch);
     }
 
 

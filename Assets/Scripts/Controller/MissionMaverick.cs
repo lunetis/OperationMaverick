@@ -46,46 +46,72 @@ public class MissionMaverick : MissionManager
     [SerializeField]
     Transform firstEnemyWaypoint;
 
+
+
+    [Space(20)]
+    [Header("Transcripts")]
+    
     [SerializeField]
-    [Tooltip("DEBUG only")]
+    string scriptOnHighAltitude;
+    
+    [SerializeField]
+    List<string> scriptsOnAltitudeFail;
+    
+    [SerializeField]
+    List<string> scriptsOnLeaveCanyon;
+
+    [SerializeField]
+    [Tooltip("This scripts must contain 3 scripts. 1st and 2nd will be printed randomly, and 3rd will be printed after that.")]
+    List<string> scriptsOnMiss;
+
+    [SerializeField]
+    List<string> scriptsOnHit;
+    
+    [SerializeField]
+    List<string> scriptsOnPhase2;
+
+    
+    [SerializeField]
+    List<string> scriptsForRemainEnemies;
+    
+    [SerializeField]
+    string scriptForOneTarget;
+
+    [SerializeField]
+    List<string> scriptsOnMissionAccomplish;
+
+    
+    [SerializeField]
+    List<string> scriptsOnCanyon;
+    
+
+    [SerializeField]
+    [Header("DEBUG only")]
     int initialPhase = 1;
-
-    protected override void Start()
-    {
-        phase = initialPhase;
-        canyonStatus = CanyonStatus.NOT_ENTERED;
-
-        SAMControllers = new List<EnemyWeaponController>(SAMs.Length);
-        SAMScripts = new List<SAM>(SAMs.Length);
-
-        foreach(var SAM in SAMs)
-        {
-            SAMControllers.Add(SAM.GetComponent<EnemyWeaponController>());
-            SAMScripts.Add(SAM.GetComponent<SAM>());
-        }
-
-        SetSAMsActive(false);
-        SetEnemyAircraftsActive(false);
-
-        remainingEnemyAircraftCnt = enemyAircrafts.Length;
-
-        base.Start();
-    }
-
+    public Transform phase1start;
+    public Transform phase2start;
 
     void CheckAltitude(Vector3 playerPos)
     {
+        if(GameManager.Instance.IsGameOver == true)
+            return;
+        
         if(playerPos.y > warningAltitude)
         {
             if(playerPos.y < failAltitude)
             {
                 // Caution
+                GameManager.ScriptManager.AddScriptAtFront(scriptOnHighAltitude);
+
+                // Do not print again
+                scriptOnHighAltitude = "";
                 alertUIController.SetCautionUI(true);
             }
             else
             {
                 // Fail
-                GameManager.Instance.GameOver(false);
+                GameOver();
+                AddScript(scriptsOnAltitudeFail);
             }
         }
         else
@@ -101,11 +127,16 @@ public class MissionMaverick : MissionManager
         // Fail
         if(isHit == false)
         {
-            GameManager.Instance.GameOver(false);
+            // This scripts must contain 3 scripts. 
+            // 1st and 2nd will be printed randomly, and 3rd will be printed after that.
+            GameManager.ScriptManager.ClearScriptQueue();
+            AddScriptRandomly(scriptsOnMiss.GetRange(0, 2));
+            AddScript(scriptsOnMiss[2]);
         }
         // Success: proceed
         else
         {
+            AddScriptRandomly(scriptsOnHit);
             phase = 2;
         }
     }
@@ -133,17 +164,38 @@ public class MissionMaverick : MissionManager
     }
 
 
+    // Just calls ScriptManager functions
+    void AddScript(string scriptKey)
+    {
+        GameManager.ScriptManager.AddScript(scriptKey);
+    }
+
+    void AddScript(List<string> scriptKeyList)
+    {
+        GameManager.ScriptManager.AddScript(scriptKeyList);
+    }
+
+    void AddScriptRandomly(List<string> scriptKey)
+    {
+        GameManager.ScriptManager.AddScriptRandomly(scriptKey);
+    }
+
+
     void CheckPhase1()
     {
         Vector3 playerPos = GameManager.PlayerAircraft.transform.position;
 
+        // When entering the canyon
         if(canyonStatus == CanyonStatus.NOT_ENTERED && canyonEnterPositionZ < playerPos.z)
         {
             canyonStatus = CanyonStatus.ENTERED;
             redTimer.RemainTime_RedTimerOnly = timeLimit;
             redTimer.gameObject.SetActive(true);
+
+            Invoke("PlayScriptsOnCanyon", Random.Range(20, 100));
         }
 
+        // In the canyon
         if(canyonStatus == CanyonStatus.ENTERED)
         {
             // Altitude Restriction
@@ -155,32 +207,48 @@ public class MissionMaverick : MissionManager
             {
                 canyonStatus = CanyonStatus.LEAVED;
                 alertUIController.SetCautionUI(false);
+                
+                AddScript(scriptsOnLeaveCanyon);
             }
         }
     }
 
-public void DecreaseEnemyAircraftCnt()
-{
-    remainingEnemyAircraftCnt--;
-
-    // Some additional voice comms can be added
-
-    if(remainingEnemyAircraftCnt == 0)
+    public void DecreaseEnemyAircraftCnt()
     {
-        GameManager.Instance.MissionAccomplish();
+        remainingEnemyAircraftCnt--;
+
+        if(GameManager.Instance.IsGameOver == true)
+            return;
+
+        // 1st plane down, 2nd plane down, ...
+        AddScript(scriptsForRemainEnemies[enemyAircrafts.Length - remainingEnemyAircraftCnt - 1]);
+
+        if(remainingEnemyAircraftCnt == 1)
+        {
+            AddScript(scriptForOneTarget);
+        }
+
+        if(remainingEnemyAircraftCnt == 0)
+        {
+            // Mission Accomplish
+            ResultData.score = GameManager.PlayerAircraft.Score;
+            GameManager.Instance.MissionAccomplish();
+            AddScriptRandomly(scriptsOnMissionAccomplish);
+        }
     }
-}
 
     void CheckPhase2()
     {
         if(hasSAMsActivated == false && GameManager.PlayerAircraft.transform.position.y > phase2BombingLeaveAltitude)
         {
+            AddScript(scriptsOnPhase2);
             SetSAMsActive(true);
             SetEnemyAircraftsActive(true);
             hasSAMsActivated = true;
         }
     }
 
+    // Misc. scripts (Can be invoked)
     void StopTimer()
     {
         redTimer.enabled = false;
@@ -193,8 +261,86 @@ public void DecreaseEnemyAircraftCnt()
         redTimer.gameObject.SetActive(false);
     }
 
+    void PlayScriptsOnCanyon()
+    {
+        AddScript(scriptsOnCanyon);
+    }
+
+    void UpdateMission()
+    {
+        GameManager.UIController.SetLabel(AlertUIController.LabelEnum.MissionUpdated);
+    }
+    
+    void GameOver()
+    {
+        GameManager.Instance.GameOver(false, false, false);
+    }
+
+    void FadeOut()
+    {
+        if(GameManager.Instance.IsGameOver == true)
+        {
+            GameManager.Instance.GameOverFadeOut();
+        }
+        else
+        {
+            GameManager.Instance.MissionAccomplishedFadeOut();
+        }
+    }
+
+    // ================================
+
+    public override void OnGameOver(bool isDead)
+    {
+        if(isDead == true)
+        {
+            AddScriptRandomly(onDeadScripts);
+        }
+        else
+        {
+            AddScriptRandomly(onMissionFailedScripts);
+        }
+    }
+    
+
+    protected override void Start()
+    {
+        phase = initialPhase;
+        canyonStatus = CanyonStatus.NOT_ENTERED;
+
+        SAMControllers = new List<EnemyWeaponController>(SAMs.Length);
+        SAMScripts = new List<SAM>(SAMs.Length);
+
+        foreach(var SAM in SAMs)
+        {
+            SAMControllers.Add(SAM.GetComponent<EnemyWeaponController>());
+            SAMScripts.Add(SAM.GetComponent<SAM>());
+        }
+
+        SetSAMsActive(false);
+        SetEnemyAircraftsActive(false);
+
+        remainingEnemyAircraftCnt = enemyAircrafts.Length;
+
+        base.Start();
+
+        if(initialPhase == 1)
+        {
+            GameManager.PlayerAircraft.transform.SetPositionAndRotation(phase1start.position, phase1start.rotation);
+        }
+        else if(initialPhase == 2)
+        {
+            GameManager.ScriptManager.ClearScriptQueue();
+            GameManager.PlayerAircraft.transform.SetPositionAndRotation(phase2start.position, phase2start.rotation);
+        }
+    }
+
+
     void Update()
     {
+        if(GameManager.Instance.IsGameOver == true)
+            return;
+            
         switch(phase)
         {
             case 1:
@@ -205,6 +351,6 @@ public void DecreaseEnemyAircraftCnt()
                 CheckPhase2();
                 break;
         }
-        
     }
+
 }

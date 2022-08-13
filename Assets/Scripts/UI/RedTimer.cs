@@ -28,6 +28,9 @@ public class RedTimer : MonoBehaviour
     float remainTime;
     bool isTimeLow;
 
+    [SerializeField]
+    bool fadeOutOnTimesUp = true;
+
     public int RemainTime
     {
         set
@@ -57,7 +60,7 @@ public class RedTimer : MonoBehaviour
         
         if(remainTime <= 0)
         {
-            GameManager.Instance.GameOver(false);
+            GameManager.Instance.GameOver(false, autoFadeOut: fadeOutOnTimesUp);
             remainTime = 0;
         }
         CheckTimeScripts();
@@ -89,7 +92,7 @@ public class RedTimer : MonoBehaviour
     {
         foreach(TimeScript timeScript in remainTimeScripts)
         {
-            if(remainTime < timeScript.time)
+            if(remainTime <= timeScript.time)
             {
                 GameManager.ScriptManager.AddScript(timeScript.scriptKey);
                 removableScriptKeys.Add(timeScript.scriptKey);

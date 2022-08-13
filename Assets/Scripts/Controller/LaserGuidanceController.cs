@@ -96,7 +96,7 @@ public class LaserGuidanceController : MonoBehaviour
     }
 
 
-    // Draw Line between 
+    // Draw Line between target and bomb
     void OnPostRenderCallback(Camera cam)
 	{
         if(lgb == null)

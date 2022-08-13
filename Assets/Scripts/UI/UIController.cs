@@ -225,7 +225,7 @@ public class UIController : MonoBehaviour
 
     public void SetScoreText(int score)
     {
-        this.score += score;
+        this.score = score;
         string text = string.Format("SCORE <mspace=18>{0}</mspace>", this.score);
         scoreText.text = text;
     }

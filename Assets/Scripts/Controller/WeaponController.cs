@@ -195,7 +195,7 @@ public class WeaponController : MonoBehaviour
 
     TargetObject GetNextTarget()
     {
-        List<TargetObject> targets = GameManager.Instance.GetTargetsWithinDistance(3000);
+        List<TargetObject> targets = GameManager.Instance.GetTargetsWithinDistance(10000);
         TargetObject selectedTarget = null;
 
         if(targets.Count == 0) return null;

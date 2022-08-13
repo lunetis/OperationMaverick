@@ -11,12 +11,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Loading.unity
     guid: d5015d90b70d64146b8775d1bfacd12a
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/ZERO.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
     path: Assets/Scenes/FreeFlight.unity
     guid: d4da2ab25e5795044bfea6f128d68563
+  - enabled: 1
+    path: Assets/Scenes/Maverick.unity
+    guid: ba8a5e8b1d111e0408876666450ce765
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 5a6eec39e675d5f468337aab591cea7d,
       type: 2}

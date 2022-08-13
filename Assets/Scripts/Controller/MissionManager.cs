@@ -12,13 +12,13 @@ public class MissionManager : MonoBehaviour
 
     [Header("Common Scripts")]
     [SerializeField]
-    List<string> onMissionStartScripts;
+    protected List<string> onMissionStartScripts;
     [SerializeField]
-    List<string> onMissionAccomplishedScripts;
+    protected List<string> onMissionAccomplishedScripts;
     [SerializeField]
-    List<string> onMissionFailedScripts;
+    protected List<string> onMissionFailedScripts;
     [SerializeField]
-    List<string> onDeadScripts;
+    protected List<string> onDeadScripts;
 
     public MissionInfo MissionInfo
     {
@@ -44,6 +44,8 @@ public class MissionManager : MonoBehaviour
             GameManager.ScriptManager.AddScript(onMissionFailedScripts);
         }
     }
+
+    
 
     public virtual void SetupForRestartFromCheckpoint() {}
 

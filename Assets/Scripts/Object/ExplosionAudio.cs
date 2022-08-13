@@ -2,13 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class ExplosionAudio : MonoBehaviour
 {
     AudioSource audioSource;
+    AudioClip customAudioClip;
 
     void PlayExplosionClip()
     {
-        audioSource.PlayOneShot(SoundManager.Instance.GetExplosionClip());
+        AudioClip clip = (audioSource.clip != null) ? audioSource.clip : SoundManager.Instance.GetExplosionClip();
+        audioSource.PlayOneShot(clip);
     }
 
     void Awake()

@@ -64,6 +64,11 @@ public class ScriptManager : MonoBehaviour
     UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationHandle<Texture> portraitHandle;
     
 
+    public bool IsPrintingScript
+    {
+        get { return isPrintingScript; }
+    }
+
     public bool AddressableResourceExists(object key, Type type = null)
     {
         foreach (var l in Addressables.ResourceLocators)
@@ -86,6 +91,9 @@ public class ScriptManager : MonoBehaviour
 
     public void AddScript(string scriptKey)
     {
+        if(scriptKey == "")
+            return;
+        
         scriptQueue.AddLast(SearchScriptInfoByKey(scriptKey));
     }
 
@@ -95,6 +103,15 @@ public class ScriptManager : MonoBehaviour
         {
             scriptQueue.AddLast(SearchScriptInfoByKey(scriptKey));
         }
+    }
+
+    public void AddScriptRandomly(List<string> scriptKeyList)
+    {
+        if(scriptKeyList.Count == 0)
+            return;
+            
+        int index = UnityEngine.Random.Range(0, scriptKeyList.Count);
+        AddScript(scriptKeyList[index]);
     }
 
     public void AddScriptAtFront(string scriptKey)
@@ -263,7 +280,6 @@ public class ScriptManager : MonoBehaviour
     {
         scriptQueue = new LinkedList<ScriptInfo>();
         scriptUI.SetActive(false);
-
     }
 
     void Start()

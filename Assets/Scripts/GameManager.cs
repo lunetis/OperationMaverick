@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     public ObjectPool mpbmEffectObjectPool;
     public ObjectPool smokeTrailEffectObjectPool;
     public ObjectPool borderIncicatorObjectPool;
+    public ObjectPool samMissileObjectPool;
 
     [SerializeField]
     ObjectPool smokeTrailDamagePool;
@@ -268,23 +269,24 @@ public class GameManager : MonoBehaviour
         targetController.RemoveAllTargetUI();
         objects.Clear();
         weaponController.ChangeTarget();
+        DisableAllEnemies();
 
         foreach(GameObject obj in disableOnGameOver)
         {
             obj.SetActive(false);
         }
 
-        scriptManager.ClearScriptQueue(true);
+        scriptManager.ClearScriptQueue();
 
         ResultData.elapsedTime += GameManager.UIController.StopCountAndGetElapsedTime();
         
-        float gameOverFadeOutDelay = 5.0f;
-        Invoke("GameOverFadeOut", gameOverFadeOutDelay);
+        // float gameOverFadeOutDelay = 5.0f;
+        // Invoke("GameOverFadeOut", gameOverFadeOutDelay);
     }
 
-    public void GameOver(bool isDead, bool isInstantDeath = false)
+    public void GameOver(bool isDead, bool isInstantDeath = false, bool autoFadeOut = true, float fadeOutDelay = 5.0f)
     {
-        float gameOverFadeOutDelay = 5.0f;
+        float gameOverFadeOutDelay = fadeOutDelay;
         audioController.TargetBGMVolume = AudioController.MIN_VOLUME;
 
         // Set UI
@@ -300,6 +302,7 @@ public class GameManager : MonoBehaviour
         targetController.RemoveAllTargetUI();
         objects.Clear();
         weaponController.ChangeTarget();
+        DisableAllEnemies();
 
         foreach(GameObject obj in disableOnGameOver)
         {
@@ -328,12 +331,36 @@ public class GameManager : MonoBehaviour
             } 
         }
         
-        isGameOver = true;
         scriptManager.ClearScriptQueue(true);
 
         ResultData.elapsedTime += GameManager.UIController.StopCountAndGetElapsedTime();
         missionManager.OnGameOver(isDead);
-        Invoke("GameOverFadeOut", gameOverFadeOutDelay);
+
+        if(autoFadeOut == true)
+        {
+            Invoke("GameOverFadeOut", gameOverFadeOutDelay);
+        }
+        
+        isGameOver = true;
+    }
+
+    void DisableAllEnemies()
+    {
+        // Enemies
+        var enemyWeaponControllers = FindObjectsOfType<EnemyWeaponController>();
+        foreach(var controller in enemyWeaponControllers)
+        {
+            controller.enabled = false;
+        }
+        // Missiles
+        foreach(Transform enemyMissiles in enemyMissileObjectPool.transform)
+        {
+            enemyMissiles.gameObject.SetActive(false);
+        }
+        foreach(Transform enemyMissiles in samMissileObjectPool.transform)
+        {
+            enemyMissiles.gameObject.SetActive(false);
+        }
     }
 
     // Show/Hide Pause UI Canvas, Hide/Show other UIs, Set TimeScale
@@ -422,11 +449,19 @@ public class GameManager : MonoBehaviour
     }
 
 
-    void GameOverFadeOut()
+    public void GameOverFadeOut()
     {
         CancelInvoke();
 
         fadeController.OnFadeOutComplete.AddListener(ShowGameOverUI);
+        fadeController.FadeOut(FadeController.FadeInReserveType.FadeIn);
+    }
+
+    public void MissionAccomplishedFadeOut()
+    {
+        CancelInvoke();
+
+        fadeController.OnFadeOutComplete.AddListener(ShowResultScene);
         fadeController.FadeOut(FadeController.FadeInReserveType.FadeIn);
     }
     

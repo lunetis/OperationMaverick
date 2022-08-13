@@ -5042,7 +5042,7 @@ MonoBehaviour:
   accelAmount: 70
   turningForce: 2
   additionalReleaseSpeed: 15
-  smartTrackingRate: 0.6
+  smartTrackingRate: 0.7
   boresightAngle: 90
   lifetime: 5
   targetSearchSpeed: 75

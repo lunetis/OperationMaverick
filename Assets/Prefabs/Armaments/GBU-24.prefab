@@ -179,6 +179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aad9d8d146b1ed94caa31e28f6a6226f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 0}
   missileName: GPB
   isLockable: 0
   damage: 10
@@ -203,6 +204,9 @@ MonoBehaviour:
   guidedPosition: {x: 0, y: 0, z: 0}
   initialFallAmount: 7
   lerpAmount: 3
+  scriptsOnLaunch:
+  - M_A1_W1
+  - M_A1_W2
 --- !u!1001 &5912097409179065900
 PrefabInstance:
   m_ObjectHideFlags: 0

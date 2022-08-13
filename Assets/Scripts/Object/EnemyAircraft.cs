@@ -20,6 +20,7 @@ public class EnemyAircraft : AircraftAI
     [SerializeField]
     float minimumPlayerDistance = 2000; // If current distance is longer than this value, AI will follow the player
 
+
     protected override Vector3 CreateWaypoint()
     {
         if(GameManager.Instance == null || GameManager.PlayerAircraft == null)

@@ -45,6 +45,8 @@ public class MainMenuController : MonoBehaviour
     GameObject currentActiveScreen = null;
     MenuController currentMenuController = null;
 
+    public string sceneName = "ZERO";
+
     public void SetDescriptionText(string text)
     {
         descriptionText.text = text;
@@ -158,7 +160,7 @@ public class MainMenuController : MonoBehaviour
     public void StartMission()
     {
         playerInput.enabled = false;
-        LoadingController.sceneName = "ZERO";
+        LoadingController.sceneName = sceneName;
 
         fadeController.OnFadeOutComplete.AddListener(ReserveLoadScene);
         fadeController.FadeOut();

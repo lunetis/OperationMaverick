@@ -59,6 +59,8 @@ public class TargetObject : MonoBehaviour
 
     public UnityEvent destroyActions;
 
+    AITranscript aiTranscript;
+
     // Public Functions
     public virtual void OnDamage(float damage, int layer, string tag = "")
     {
@@ -173,6 +175,7 @@ public class TargetObject : MonoBehaviour
         }
         DeleteMinimapSprite();
         
+        aiTranscript?.PlayScriptOnDestroy();
         destroyActions.Invoke();
     }
 
@@ -191,6 +194,7 @@ public class TargetObject : MonoBehaviour
     
     protected virtual void Start()
     {
+        aiTranscript = GetComponent<AITranscript>();
         objectCollider = GetComponent<Collider>();
 
         isEnemy = gameObject.layer != LayerMask.NameToLayer("Player");

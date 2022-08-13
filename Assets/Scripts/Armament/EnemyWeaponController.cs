@@ -45,6 +45,8 @@ public class EnemyWeaponController : MonoBehaviour
     [Range(0, 1)]
     float fireDelayRandomizeAmount = 0;
 
+    AITranscript aiTranscript;
+
     void ResetLock()
     {
         isLocked = false;
@@ -147,6 +149,8 @@ public class EnemyWeaponController : MonoBehaviour
         Missile missileScript = missile.GetComponent<Missile>();
 
         missileScript.Launch(targetObject, initialSpeed, gameObject.layer);
+
+        aiTranscript?.PlayScriptOnFire();
     }
 
     void OnDisable()
@@ -174,6 +178,8 @@ public class EnemyWeaponController : MonoBehaviour
 
         targetObject = GameManager.PlayerAircraft;
         fireCheckDelay += fireCheckDelay * Random.Range(0, fireDelayRandomizeAmount);
+
+        aiTranscript = GetComponent<AITranscript>();
     }
 
     // Update is called once per frame
