@@ -1,5 +1,9 @@
 # Operation Maverick
 
+[![Video Label](http://img.youtube.com/vi/VNjDvzprKrM/0.jpg)](https://youtu.be/VNjDvzprKrM)
+
+(YouTube Video Link: Current development status at 2022-08-13)
+
 [[한국어 Readme]](https://github.com/lunetis/OperationMaverick/blob/main/README.kr.md)
 
 ### Fan-made Top Gun: Maverick mission with Unity (with ACE COMBAT 7 style UI)
