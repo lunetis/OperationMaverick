@@ -43,6 +43,11 @@ public class TargetObject : MonoBehaviour
         get { return lockedMissiles; }
     }
 
+    public bool IsDestroyed
+    {
+        get { return isDestroyed; }
+    }
+
     bool isLocking;
     public bool IsLocking
     {
