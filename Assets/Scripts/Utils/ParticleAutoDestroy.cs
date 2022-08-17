@@ -5,6 +5,7 @@ using UnityEngine;
 public class ParticleAutoDestroy : MonoBehaviour
 {
     public float duration;
+    public bool destroyInsteadDisable = false;
 
     void OnEnable()
     {
@@ -19,7 +20,14 @@ public class ParticleAutoDestroy : MonoBehaviour
 
     void Disable()
     {
-        gameObject.SetActive(false);
+        if(destroyInsteadDisable == true)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }        
     }
 
     private void OnDisable() {

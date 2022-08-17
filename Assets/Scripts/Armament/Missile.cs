@@ -223,21 +223,7 @@ public class Missile : MonoBehaviour
 
     protected virtual void DisableMissile()
     {
-        hasWarned = false;
         
-        // Send Message to object that it is no more locked on
-        if(target != null)
-        {
-            target.RemoveLockedMissile(this);
-
-            if(isDisabled == false && isHit == false)
-            {
-                ShowMissedLabel();
-            }
-        }
-        
-        isDisabled = true;
-        transform.parent = parent;
         gameObject.SetActive(false);
     }
 
@@ -269,6 +255,22 @@ public class Missile : MonoBehaviour
 
     void OnDisable()
     {
+        hasWarned = false;
+        
+        // Send Message to object that it is no more locked on
+        if(target != null)
+        {
+            target.RemoveLockedMissile(this);
+
+            if(isDisabled == false && isHit == false)
+            {
+                ShowMissedLabel();
+            }
+        }
+        
+        isDisabled = true;
+        transform.parent = parent;
+        
         if(smokeTrailEffect != null)
         {
             smokeTrailEffect.GetComponent<SmokeTrail>().StopFollow();

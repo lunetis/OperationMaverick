@@ -1,5 +1,5 @@
 {
-    "name": "ZERO",
+    "name": "Aircraft",
     "maps": [
         {
             "name": "Player",
@@ -11,7 +11,8 @@
                     "id": "878b8a69-8f32-4d91-af20-8aba916a4960",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Fire",
@@ -19,7 +20,8 @@
                     "id": "8a45af90-bf2c-42df-b5e4-759c11a7c7c7",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Gun",
@@ -27,7 +29,8 @@
                     "id": "92f5e340-e319-4e95-a6db-c1422914f4b1",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Roll",
@@ -35,7 +38,8 @@
                     "id": "35552737-07f8-4426-84dd-fcfda5c1b07e",
                     "expectedControlType": "Axis",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Pitch",
@@ -43,7 +47,8 @@
                     "id": "8e676268-1752-4476-b579-058878d32b7d",
                     "expectedControlType": "Axis",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Yaw L",
@@ -51,7 +56,8 @@
                     "id": "3041eb09-1026-472b-8e67-8f951cdd4046",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Yaw R",
@@ -59,7 +65,8 @@
                     "id": "e1671f37-b650-4dec-a5f9-56d00dc06440",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Accelerate",
@@ -67,7 +74,8 @@
                     "id": "c719aa54-c7f7-4768-8476-74c9358b8665",
                     "expectedControlType": "Analog",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Brake",
@@ -75,7 +83,8 @@
                     "id": "c1a6d719-2a1a-4876-938b-4084d9cff804",
                     "expectedControlType": "Analog",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Switch Weapon",
@@ -83,7 +92,8 @@
                     "id": "40792a08-d85f-46fe-9ee9-79f376d4f99e",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Change View",
@@ -91,7 +101,8 @@
                     "id": "c9b7ffef-c2c0-4a84-83e1-8fa7f87f0398",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Change Minimap",
@@ -99,7 +110,8 @@
                     "id": "0faa8da5-ce84-4a4b-8dff-ee240e90e1e6",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Change Target",
@@ -107,7 +119,8 @@
                     "id": "5fdd31c6-6e88-43e9-b3e8-e0425c7dae8f",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Hold(duration=0.3)"
+                    "interactions": "Hold(duration=0.3)",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Pause",
@@ -115,7 +128,8 @@
                     "id": "2450373f-83a1-4278-ac47-063a31031047",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "[DEBUG]",
@@ -123,7 +137,17 @@
                     "id": "2e2cadf2-b1f8-4c4e-91fc-ed6375326d7d",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Hold(duration=0.3)"
+                    "interactions": "Hold(duration=0.3)",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Flare",
+                    "type": "Button",
+                    "id": "b50b543c-9a74-4971-bcf4-399bc6e5ac9e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -511,6 +535,28 @@
                     "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "090d33eb-3032-425d-85d4-f934dda595b5",
+                    "path": "<Keyboard>/f",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Flare",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "de397e3f-f0c6-490a-8d40-3b122e71f6e6",
+                    "path": "<Gamepad>/leftStickPress",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Flare",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -524,7 +570,8 @@
                     "id": "3b7ced00-00e5-4a26-8d95-e4cf88b79dc5",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Submit",
@@ -532,7 +579,8 @@
                     "id": "c920a527-d061-4e83-9f0a-f3a85b32923f",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Cancel",
@@ -540,7 +588,8 @@
                     "id": "4637db41-22d0-47bc-ba1f-5bf4ead34a1c",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Pause",
@@ -548,7 +597,8 @@
                     "id": "6e9eb2f3-c807-48f2-86e1-fca13de84c96",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "[DEBUG] Quit",
@@ -556,7 +606,8 @@
                     "id": "77bc6673-8b71-4ad1-9b11-b8fefdcda679",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Hold(duration=0.3)"
+                    "interactions": "Hold(duration=0.3)",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "[DEBUG] Restart",
@@ -564,7 +615,8 @@
                     "id": "afaa6573-9ee6-462a-83e3-57b5658cd86a",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Hold(duration=0.3)"
+                    "interactions": "Hold(duration=0.3)",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -899,7 +951,8 @@
                     "id": "633b7231-e85b-478b-8fcd-f1684745ba79",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [

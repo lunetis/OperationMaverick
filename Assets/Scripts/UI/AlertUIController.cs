@@ -295,8 +295,8 @@ public class AlertUIController : MonoBehaviour
                 
             case PlayerAircraft.WarningStatus.WARNING:
                 CancelInvoke("PlayMissileBeepAudio");
-                CancelInvoke("PlayMissileVoiceAudio");
                 InvokeRepeating("PlayWarningBeepAudio", missileCautionAlertRepeatTime * 0.2f, missileCautionAlertRepeatTime);
+                CancelInvoke("PlayMissileVoiceAudio");
                 isPlayingVoiceAlert = false;
                 break;
                 

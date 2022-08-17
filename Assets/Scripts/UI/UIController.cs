@@ -63,6 +63,9 @@ public class UIController : MonoBehaviour
     TextMeshProUGUI spwText;
 
     [SerializeField]
+    TextMeshProUGUI flrText;
+
+    [SerializeField]
     TextMeshProUGUI dmgText;
 
     [SerializeField]
@@ -262,6 +265,12 @@ public class UIController : MonoBehaviour
     {
         string text = string.Format("<align=left>{0}<line-height=0>\n<align=right><mspace=18>{1}</mspace><line-height=0>", specialWeaponName, specialWeapons);
         spwText.text = text;
+    }
+
+    public void SetFlareText(int flares)
+    {
+        string text = string.Format("<align=left>FLR<line-height=0>\n<align=right><mspace=18>{0}</mspace><line-height=0>", flares);
+        flrText.text = text;
     }
 
     void SetAircraftDamageUI()

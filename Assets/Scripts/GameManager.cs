@@ -361,6 +361,11 @@ public class GameManager : MonoBehaviour
         {
             controller.enabled = false;
         }
+        DisableAllMissiles();
+    }
+
+    public void DisableAllMissiles()
+    {
         // Missiles
         foreach(Transform enemyMissiles in enemyMissileObjectPool.transform)
         {
