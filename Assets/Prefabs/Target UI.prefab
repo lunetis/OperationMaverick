@@ -231,7 +231,7 @@ MonoBehaviour:
   nicknameText: {fileID: 8387989424329936365}
   targetText: {fileID: 8387989424601958472}
   isMainTarget: 1
-  hideDistance: 10000
+  hideDistance: 5000
   uiObject: {fileID: 7852178435658271255}
   blinkUIObject: {fileID: 3646369360702827384}
   nextTargetText: {fileID: 7418914093899324216}

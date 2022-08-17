@@ -55,6 +55,12 @@ public class MinimapSprite : MonoBehaviour
     void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        TargetObject targetObject = transform.parent.GetComponent<TargetObject>();
+
+        if(targetObject != null && targetObject.enabled == false)
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     void Start()

@@ -41,6 +41,9 @@ public class MissionMaverick : MissionManager
     [SerializeField]
     GameObject[] enemyAircrafts;
 
+    [SerializeField]
+    List<TargetObject> targetsEnableOnPhase2;
+
     int remainingEnemyAircraftCnt;
 
     [SerializeField]
@@ -53,6 +56,8 @@ public class MissionMaverick : MissionManager
     
     [SerializeField]
     string scriptOnHighAltitude;
+
+    bool hasWarned;
     
     [SerializeField]
     List<string> scriptsOnAltitudeFail;
@@ -83,14 +88,18 @@ public class MissionMaverick : MissionManager
     
     [SerializeField]
     List<string> scriptsOnCanyon;
+
+    [SerializeField]
+    TipUIController tipUIController;
+
+    public Transform phase1start;
+    public Transform phase2start;
+
     
 
     [SerializeField]
     [Header("DEBUG only")]
     int initialPhase = 1;
-    public Transform phase1start;
-    public Transform phase2start;
-
     void CheckAltitude(Vector3 playerPos)
     {
         if(GameManager.Instance.IsGameOver == true)
@@ -101,10 +110,13 @@ public class MissionMaverick : MissionManager
             if(playerPos.y < failAltitude)
             {
                 // Caution
-                GameManager.ScriptManager.AddScriptAtFront(scriptOnHighAltitude);
+                if(hasWarned == false)
+                {
+                    GameManager.ScriptManager.AddScriptAtFront(scriptOnHighAltitude);
+                    hasWarned = true;
+                }
 
                 // Do not print again
-                scriptOnHighAltitude = "";
                 alertUIController.SetCautionUI(true);
             }
             else
@@ -151,6 +163,10 @@ public class MissionMaverick : MissionManager
         foreach(var script in SAMScripts)
         {
             script.enabled = active;
+        }
+        foreach(var target in targetsEnableOnPhase2)
+        {
+            target.enabled = active;
         }
     }
 
@@ -288,6 +304,16 @@ public class MissionMaverick : MissionManager
         }
     }
 
+    void ShowTip1()
+    {
+        tipUIController.ShowTip("TIP_1");
+    }
+
+    void ShowTip2()
+    {
+        tipUIController.ShowTip("TIP_2");
+    }
+
     // ================================
 
     public override void OnGameOver(bool isDead)
@@ -301,13 +327,17 @@ public class MissionMaverick : MissionManager
             AddScriptRandomly(onMissionFailedScripts);
         }
     }
-    
 
-    protected override void Start()
+    public override void SetupForRestartFromCheckpoint()
     {
-        phase = initialPhase;
-        canyonStatus = CanyonStatus.NOT_ENTERED;
-
+        if(phase == 1)
+        {
+            ResultData.elapsedTime = 0;
+        }
+    }
+    
+    private void Awake()
+    {
         SAMControllers = new List<EnemyWeaponController>(SAMs.Length);
         SAMScripts = new List<SAM>(SAMs.Length);
 
@@ -316,22 +346,49 @@ public class MissionMaverick : MissionManager
             SAMControllers.Add(SAM.GetComponent<EnemyWeaponController>());
             SAMScripts.Add(SAM.GetComponent<SAM>());
         }
-
         SetSAMsActive(false);
         SetEnemyAircraftsActive(false);
+    }
+
+    protected override void Start()
+    {
+        hasWarned = false;
+
+        switch(GameSettings.difficultySetting)
+        {
+            case GameSettings.Difficulty.EASY:      timeLimit = 270; break;
+            case GameSettings.Difficulty.NORMAL:    timeLimit = 210; break;
+            case GameSettings.Difficulty.HARD:      timeLimit = 150; break;
+            case GameSettings.Difficulty.ACE:       timeLimit = 135; break;
+            default:                                timeLimit = 210; break;
+        }
+
+        if(initialPhase > 1)
+        {
+            phase = initialPhase;
+        }
+        
+        canyonStatus = CanyonStatus.NOT_ENTERED;
 
         remainingEnemyAircraftCnt = enemyAircrafts.Length;
 
-        base.Start();
+        SetResultData();
+        
+        GameManager.UIController.SetRemainTime(missionInfo.TimeLimit);
 
-        if(initialPhase == 1)
+        Debug.Log("Elapsed time : " + ResultData.elapsedTime);
+
+        if(phase == 1)
         {
             GameManager.PlayerAircraft.transform.SetPositionAndRotation(phase1start.position, phase1start.rotation);
+            GameManager.ScriptManager.AddScript(onMissionStartScripts);
         }
-        else if(initialPhase == 2)
+        else if(phase == 2)
         {
             GameManager.ScriptManager.ClearScriptQueue();
             GameManager.PlayerAircraft.transform.SetPositionAndRotation(phase2start.position, phase2start.rotation);
+            // You can't use special weapon at phase 2
+            GameManager.WeaponController.SpecialWeaponCnt = 0;
         }
     }
 

@@ -140,6 +140,12 @@ public class Missile : MonoBehaviour
             return;
 
         Vector3 targetPos = Vector3.Lerp(target.transform.position, GetPredictedTargetPosition(), smartTrackingRate);
+        
+        // For ground objects: give offset (0, 5, 0) if the distance between missile and the target > 100 (on unity coordinates)
+        if(target.Info.IsGroundObject == true && Vector3.Distance(target.transform.position, transform.position) > 100)
+        {
+            targetPos.y += 5;
+        }
         Vector3 targetDir = target.transform.position - transform.position;
 
         // Angle : Based on current target position

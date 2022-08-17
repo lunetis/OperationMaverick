@@ -170,7 +170,7 @@ public class TargetObject : MonoBehaviour
         {
             GameManager.Instance?.RemoveEnemy(this);
             GameManager.TargetController?.RemoveTargetUI(this);
-            GameManager.WeaponController?.ChangeTarget();
+            GameManager.WeaponController?.NotifyTargetDestroy(this);
 
             if(lastHitLayer == LayerMask.NameToLayer("Player"))
             {
@@ -195,6 +195,16 @@ public class TargetObject : MonoBehaviour
     protected virtual void AdjustValuesByDifficulty()
     {
         
+    }
+
+    void OnDisable()
+    {
+        SetMinimapSpriteVisible(false);
+    }
+
+    void OnEnable()
+    {
+        SetMinimapSpriteVisible(true);
     }
     
     protected virtual void Start()

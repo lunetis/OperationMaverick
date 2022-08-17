@@ -239,6 +239,10 @@ public class GameManager : MonoBehaviour
             objectsWithinDistance.Clear();
             objectsWithinDistance.Add(nearestTarget);
         }
+
+        objectsWithinDistance.Sort((TargetObject t1, TargetObject t2) =>
+            (GetAngleBetweenTransform(t1.transform) > GetAngleBetweenTransform(t2.transform) ? 1 : -1));
+            
         return objectsWithinDistance;
     }
 
@@ -349,6 +353,11 @@ public class GameManager : MonoBehaviour
         // Enemies
         var enemyWeaponControllers = FindObjectsOfType<EnemyWeaponController>();
         foreach(var controller in enemyWeaponControllers)
+        {
+            controller.enabled = false;
+        }
+        var SAMcontrollers = FindObjectsOfType<SAM>();
+        foreach(var controller in SAMcontrollers)
         {
             controller.enabled = false;
         }

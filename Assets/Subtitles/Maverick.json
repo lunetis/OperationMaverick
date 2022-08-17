@@ -17,7 +17,9 @@
         {
             "subtitleKey": "M_A0_3",
             "name": "AWACS Eagle Eye",
-            "side": "A"
+            "side": "A",
+            "invokeMethodName": "ShowTip1",
+            "invokeMethodDelay": 4.5
         },
 
 
@@ -110,7 +112,9 @@
         {
             "subtitleKey": "M_A1_6",
             "name": "AWACS Eagle Eye",
-            "side": "A"
+            "side": "A",
+            "invokeMethodName": "ShowTip2",
+            "invokeMethodDelay": 4.3
         },
 
         

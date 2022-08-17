@@ -2936,6 +2936,9 @@ MonoBehaviour:
   destroyEffect: {fileID: 1556574608389113247, guid: 8d4b3caee090b1247bf61af54d4d0905,
     type: 3}
   isNextTarget: 0
+  destroyActions:
+    m_PersistentCalls:
+      m_Calls: []
   missileEmergencyDistance: 300
   missileIndicatorController: {fileID: 709868109}
   destroyDelay: 2.5
@@ -2996,9 +2999,11 @@ MonoBehaviour:
   targetDetectDistance: 3000
   leftMissileTransform: {fileID: 125984312}
   rightMissileTransform: {fileID: 338894870}
+  centerMissileTransform: {fileID: 0}
   missile: {fileID: 5286992299650033890, guid: ac340c911b1a1c8439acd116fe36d84b, type: 3}
   specialWeapon: {fileID: 8671801656823410973, guid: bde73a6bb4ae07249b5a2a75aecc96ed,
     type: 3}
+  specialWeaponScript: {fileID: 0}
   bulletCnt: 4000
   gunTransform: {fileID: 1606476258}
   gunRPM: 1200
@@ -3044,6 +3049,9 @@ MonoBehaviour:
   jetEngineControllers:
   - {fileID: 2877160633600747813}
   - {fileID: 2877160633942597547}
+  trails:
+  - {fileID: 8192866379940655196}
+  - {fileID: 8192866380005346486}
 --- !u!136 &200703166
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -5439,6 +5447,7 @@ MonoBehaviour:
   mpbmEffectObjectPool: {fileID: 943373760}
   smokeTrailEffectObjectPool: {fileID: 161390301}
   borderIncicatorObjectPool: {fileID: 1910112303}
+  samMissileObjectPool: {fileID: 0}
   smokeTrailDamagePool: {fileID: 439025772}
   bulletObjectPool: {fileID: 706416174}
   bulletHitEffectObjectPool: {fileID: 1529739573}
@@ -10968,6 +10977,7 @@ MonoBehaviour:
   missileVoiceAlertClip: {fileID: 8300000, guid: 0717d9c5d18e43041a5f3e160169dcb6,
     type: 3}
   stallVoiceAlertClip: {fileID: 8300000, guid: c9c2a79151dab964b89f7ae3af00b9c0, type: 3}
+  cautionVoiceAlertClip: {fileID: 0}
   voiceAudioSource: {fileID: 1878731962}
   alertAudioSource: {fileID: 73393719}
   labelAudioSource: {fileID: 30100056}
@@ -20219,6 +20229,7 @@ MonoBehaviour:
     scriptKey: P3_T1
   beepSingleClip: {fileID: 8300000, guid: 4c4cdca661d64e64dbcf8d80c62c9ffb, type: 3}
   beepDoubleClip: {fileID: 8300000, guid: 6be5059f5cae9b947ba7d94cf6df5346, type: 3}
+  fadeOutOnTimesUp: 1
 --- !u!224 &1309158669
 RectTransform:
   m_ObjectHideFlags: 0
@@ -24226,6 +24237,9 @@ MonoBehaviour:
   missileLaunchTransform: {fileID: 1642326957}
   lockSpeedPenalty: 1
   fireCheckDelay: 3
+  customMissileObjectPool: {fileID: 0}
+  rotatableBody: {fileID: 0}
+  fireDelayRandomizeAmount: 0
 --- !u!114 &1481947405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24284,6 +24298,9 @@ MonoBehaviour:
   destroyEffect: {fileID: 1556574608389113247, guid: 8d4b3caee090b1247bf61af54d4d0905,
     type: 3}
   isNextTarget: 0
+  destroyActions:
+    m_PersistentCalls:
+      m_Calls: []
   maxSpeed: 200
   minSpeed: 60
   defaultSpeed: 90

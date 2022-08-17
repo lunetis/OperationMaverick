@@ -101,6 +101,8 @@ public class ScriptManager : MonoBehaviour
     {
         foreach(string scriptKey in scriptKeyList)
         {
+            if(scriptKey == "")
+                continue;
             scriptQueue.AddLast(SearchScriptInfoByKey(scriptKey));
         }
     }
@@ -116,6 +118,8 @@ public class ScriptManager : MonoBehaviour
 
     public void AddScriptAtFront(string scriptKey)
     {
+        if(scriptKey == "")
+            return;
         scriptQueue.AddFirst(SearchScriptInfoByKey(scriptKey));
     }
 
@@ -167,6 +171,13 @@ public class ScriptManager : MonoBehaviour
         // Dequeue
         currentScript = scriptQueue.First.Value;
         scriptQueue.RemoveFirst();
+
+        if(currentScript == null)
+        {
+            Debug.Log("Script null");
+            return;
+        }
+            
 
         string subtitleKey = currentScript.subtitleKey;
 

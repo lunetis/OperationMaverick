@@ -90,10 +90,25 @@ public class WeaponController : MonoBehaviour
     AircraftController aircraftController;
     UIController uiController;
 
+    TargetObject nextTarget;
+
+    Vector3 prevDirectionAtTargetChange;
+    float prevTargetChangeTime;
+
+    [SerializeField]
+    float targetChangeAngleThreshold = 90;
+    [SerializeField]
+    float targetChangeTimeThreshold = 5;
+
 
     public Transform GunTransform
     {
         get { return gunTransform; }
+    }
+
+    public int SpecialWeaponCnt
+    {
+        set { specialWeaponCnt = value; }
     }
 
     // For vibration
@@ -163,20 +178,29 @@ public class WeaponController : MonoBehaviour
         }
     }
 
+    public void NotifyTargetDestroy(TargetObject destroyedTarget)
+    {
+        if(target == destroyedTarget)
+        {
+            ChangeTarget();
+        }
+    }
+
     public void ChangeTarget()
     {
         TargetObject newTarget = GetNextTarget();
         if(newTarget == null)   // No target
         {
             GameManager.CameraController.LockOnTarget(null);
-            GameManager.TargetController.ChangeTarget(null);
+            GameManager.TargetController.SetTarget(null);
             gunCrosshair.SetTarget(null);
             target = null;
             
             return;
         }
 
-        if(newTarget != null && newTarget == target) return;
+        // No change
+        if(newTarget == target) return;
 
         // Previous Target
         if(target != null)
@@ -184,53 +208,88 @@ public class WeaponController : MonoBehaviour
             target.SetMinimapSpriteBlink(false);
         }
 
-        // Current Target
-        target = GetNextTarget();
-
+        target = newTarget;
         target.isNextTarget = false;
         target.SetMinimapSpriteBlink(true);
-        GameManager.TargetController.ChangeTarget(target);
+        GameManager.TargetController.SetTarget(target);
         gunCrosshair.SetTarget(target.transform);
     }
 
     TargetObject GetNextTarget()
     {
-        List<TargetObject> targets = GameManager.Instance.GetTargetsWithinDistance(10000);
+        List<TargetObject> targets = GameManager.Instance.GetTargetsWithinDistance(5000);
         TargetObject selectedTarget = null;
 
-        if(targets.Count == 0) return null;
+        if(targets.Count == 0)
+        {
+            nextTarget = null;
+            return null;
+        }
 
-        else if(targets.Count == 1) selectedTarget = targets[0];
-
+        else if(targets.Count == 1)
+        {
+            selectedTarget = targets[0];
+            nextTarget = null;
+            return selectedTarget;
+        }
+            
         else
         {
-            if(target == null) return targets[0];   // not selected
-
+            // Reset next target indicator
             for(int i = 0; i < targets.Count; i++)
             {
-                if(targets[i] == target)
+                targets[i].isNextTarget = false;
+            }
+                
+            for(int i = 0; i < targets.Count; i++)
+            {
+                // No current target
+                if(target == null)
                 {
-                    if(i == targets.Count - 1)  // last index
+                    selectedTarget = targets[0];   // not selected
+                    nextTarget = targets[1];
+                    break;
+                }
+
+                // There's a next target in the array
+                if(targets[i] == nextTarget)
+                {
+                    // Set current target to next target
+                    selectedTarget = nextTarget;
+
+                    if(i == targets.Count - 1)  // if current target is the last index
                     {
-                        targets[1].isNextTarget = true;
-                        targets[0].isNextTarget = false;
-                        selectedTarget = targets[0];
+                        nextTarget = targets[0];    // then next target is the first index
                     }
                     else
                     {
-                        if(i + 1 == targets.Count - 1)  // i + 1 == last index
+                        // Force change when index > 1
+                        if(i > 0 && 
+                            (Vector3.Angle(transform.forward, prevDirectionAtTargetChange) > targetChangeAngleThreshold) ||
+                            (Time.time - prevTargetChangeTime > targetChangeTimeThreshold))
                         {
-                            targets[0].isNextTarget = true;
+                            prevDirectionAtTargetChange = transform.forward;
+                            nextTarget = targets[0];
                         }
-                        else    // something that is not last and before last index
+                        else
                         {
-                            targets[i + 2].isNextTarget = true;
+                            nextTarget = targets[i + 1];
                         }
-                        selectedTarget = targets[i + 1];
                     }
+                    break;
                 }
             }
+
+            // There is no current target in the array
+            if(selectedTarget == null)
+            {
+                selectedTarget = targets[0];   // not selected
+                nextTarget = targets[1];
+            }
         }
+        nextTarget.isNextTarget = true;
+        prevTargetChangeTime = Time.time;
+
         return selectedTarget;
     }
 

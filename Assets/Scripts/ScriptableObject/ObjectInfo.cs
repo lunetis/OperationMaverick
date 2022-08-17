@@ -19,6 +19,9 @@ public class ObjectInfo : ScriptableObject
     [SerializeField]
     float warningDistance;
 
+    [SerializeField]
+    bool isGroundObject;
+
     public string ObjectName
     {
         get { return objectName; }
@@ -43,5 +46,10 @@ public class ObjectInfo : ScriptableObject
     public float WarningDistance
     {
         get { return warningDistance; }
+    }
+
+    public bool IsGroundObject
+    {
+        get { return isGroundObject; }
     }
 }

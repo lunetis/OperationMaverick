@@ -8,7 +8,7 @@ public class MissionManager : MonoBehaviour
 
     [Header("Game Properties")]
     [SerializeField]
-    MissionInfo missionInfo;
+    protected MissionInfo missionInfo;
 
     [Header("Common Scripts")]
     [SerializeField]

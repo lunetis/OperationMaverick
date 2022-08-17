@@ -360,7 +360,7 @@ void CheckGroundCollision()
     protected override void AdjustValuesByDifficulty()
     {
         float evasionRateMultiplyFactor = MissionData.GetFloatFromDifficultyXML("evasionRateMultiplyFactor");
-        evasionRate = Mathf.Clamp01(evasionRate * evasionRateMultiplyFactor);
+        evasionRate = Mathf.Clamp(evasionRate * evasionRateMultiplyFactor, 0, 0.9f);
         float turningForceFactor = MissionData.GetFloatFromDifficultyXML("aiAircraftTurningForceFactor");
         turningForce *= turningForceFactor;
     }

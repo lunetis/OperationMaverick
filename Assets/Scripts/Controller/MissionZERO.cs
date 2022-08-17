@@ -193,7 +193,6 @@ public class MissionZERO : MissionManager
 
     public override void SetupForRestartFromCheckpoint()
     {
-        Debug.Log("Phase : " + phase);
         if(phase < 3)
         {
             phase = 1;
@@ -213,7 +212,6 @@ public class MissionZERO : MissionManager
 
     protected override void Start()
     {
-        Debug.Log("Phase : " + phase);
         if(phase == 3)
         {
             SetResultData();

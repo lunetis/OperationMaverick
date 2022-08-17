@@ -65,7 +65,7 @@ public class TargetController : MonoBehaviour
         targetUIs.Clear();
     }
 
-    public void ChangeTarget(TargetObject newTarget)
+    public void SetTarget(TargetObject newTarget)
     {
         // No target
         if(newTarget == null)
@@ -102,6 +102,7 @@ public class TargetController : MonoBehaviour
 
     public void ShowTargetArrow(bool show)
     {
+        GameManager.PrintDebugText("Arrow : " + show);
         targetArrow.SetArrowVisible(show);
     }
 
