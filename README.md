@@ -1,8 +1,8 @@
 # Operation Maverick
 
-[![Video Label](http://img.youtube.com/vi/XG-HUKuYXhg/0.jpg)](https://youtu.be/XG-HUKuYXhg)
+[![Video Label](http://img.youtube.com/vi/WgcMx_zpbTo/0.jpg)](https://youtu.be/WgcMx_zpbTo)
 
-(YouTube Video Link: Current development status at 2022-08-13)
+(YouTube Video Link: Current development status at 2022-08-16)
 
 [[한국어 Readme]](https://github.com/lunetis/OperationMaverick/blob/main/README.kr.md)
 
@@ -26,10 +26,13 @@
 - [x] Map Design
 - [x] Mission Implementation
 - [x] Transcript
-- [ ] Mission Cutscenes
+- [x] Main/Result Screen
 - [ ] Difficulty System
-- [ ] Main/Result Screen
 - [ ] Build Test
+
+<br>
+
+- [ ] Mission Cutscenes (Optional)
 
 <br>
 
