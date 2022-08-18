@@ -40,6 +40,8 @@ public class MinimapController : MonoBehaviour
     int minimapIndex;
     int savedMinimapIndex;  // saved on pause
 
+    public MinimapBorder minimapBorder;
+
     public MinimapIndex GetMinimapIndex()
     {
         return (MinimapIndex)minimapIndex;
@@ -102,6 +104,7 @@ public class MinimapController : MonoBehaviour
         }
 
         cameraSize = new Vector2(minimapCamera.orthographicSize, minimapCamera.orthographicSize * minimapCamera.aspect);
+        minimapBorder.SetMinimapBorderSize(minimapCamera.orthographicSize);
     }
 
 

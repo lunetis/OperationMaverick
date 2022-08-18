@@ -53,6 +53,9 @@ public class AlertUIController : MonoBehaviour
     
     [SerializeField]
     AudioClip cautionVoiceAlertClip;
+    
+    [SerializeField]
+    AudioClip descendVoiceAlertClip;
 
     [SerializeField]
     AudioSource voiceAudioSource;
@@ -182,7 +185,7 @@ public class AlertUIController : MonoBehaviour
         damaged.SetActive(false);
     }
     
-    public void SetCautionUI(bool enable)
+    public void SetCautionUI(bool enable, bool isDescend = false)
     {
         if(caution.activeSelf == enable) return;
         
@@ -190,12 +193,22 @@ public class AlertUIController : MonoBehaviour
         if(enable == true)
         {
             InvokeRepeating("BlinkAttackAlertUI", 0, warningBlinkTime);
-            InvokeRepeating("PlayCautionVoiceAudio", 0, voiceAlertRepeatTime);
+            
+            if(isDescend == true)
+            {
+                InvokeRepeating("PlayDescendVoiceAudio", 0, voiceAlertRepeatTime);
+            }
+            else
+            {
+                InvokeRepeating("PlayCautionVoiceAudio", 0, voiceAlertRepeatTime);
+            }
+            
         }
         else
         {
             CancelInvoke("BlinkAttackAlertUI");
             CancelInvoke("PlayCautionVoiceAudio");
+            CancelInvoke("PlayDescendVoiceAudio");
         }
     }
 
@@ -328,6 +341,11 @@ public class AlertUIController : MonoBehaviour
     void PlayCautionVoiceAudio()
     {
         alertAudioSource.PlayOneShot(cautionVoiceAlertClip);
+    }
+
+    void PlayDescendVoiceAudio()
+    {
+        alertAudioSource.PlayOneShot(descendVoiceAlertClip);
     }
 
     public void OnGameOver()

@@ -19,6 +19,11 @@ public class FlareController : MonoBehaviour
 
     [SerializeField]
     Rigidbody aircraftRigidbody;
+
+    [SerializeField]
+    AudioClip flareAudioClip;
+
+    AudioSource audioSource;
     
     public void UseFlare(InputAction.CallbackContext context)
     {
@@ -43,12 +48,15 @@ public class FlareController : MonoBehaviour
             effectRb.velocity = (aircraftRigidbody.velocity * 0.8f) + 
                                 new Vector3(Random.Range(-2f, 2f), Random.Range(-2f, 2f) - 15, Random.Range(-2f, 2f));
 
+            audioSource.PlayOneShot(flareAudioClip);
+
             yield return new WaitForSeconds(effectCreateDelay);
         }
     }
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         GameManager.UIController.SetFlareText(flareCnt);
     }
 }

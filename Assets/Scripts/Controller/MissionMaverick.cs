@@ -117,7 +117,7 @@ public class MissionMaverick : MissionManager
                 }
 
                 // Do not print again
-                alertUIController.SetCautionUI(true);
+                alertUIController.SetCautionUI(true, true);
             }
             else
             {
@@ -279,6 +279,9 @@ public class MissionMaverick : MissionManager
 
     void PlayScriptsOnCanyon()
     {
+        if(GameManager.Instance.IsGameOver == true)
+            return;
+
         AddScript(scriptsOnCanyon);
     }
 
@@ -375,8 +378,6 @@ public class MissionMaverick : MissionManager
         SetResultData();
         
         GameManager.UIController.SetRemainTime(missionInfo.TimeLimit);
-
-        Debug.Log("Elapsed time : " + ResultData.elapsedTime);
 
         if(phase == 1)
         {

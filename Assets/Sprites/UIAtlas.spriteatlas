@@ -77,6 +77,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 30bac1b51819f2446b58c9c02891cff1, type: 3}
   - {fileID: 21300000, guid: 25f5b3e53ec58ac41bfc2a2514cecacf, type: 3}
   - {fileID: 21300000, guid: 1cdd39f5962037d4e81871bebe22e877, type: 3}
+  - {fileID: 21300000, guid: d608d0868bf65c64e9043a44c7539d4d, type: 3}
   - {fileID: 21300000, guid: 08c04aa6280cebd41af2abdce8a14227, type: 3}
   - {fileID: 21300000, guid: 3a383e47bb297b145903e3563c01b577, type: 3}
   - {fileID: 21300000, guid: a878b967282bdd543a182d8c23f66cae, type: 3}
@@ -121,6 +122,7 @@ SpriteAtlas:
   - Aircraft Symbol
   - MSLLock
   - WARNING
+  - Map_LargeBorder_9sprite
   - Mission Accomplished
   - BorderIndicator
   - QAAM Fill
