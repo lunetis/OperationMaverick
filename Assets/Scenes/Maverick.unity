@@ -6513,7 +6513,7 @@ MonoBehaviour:
   tipUIController: {fileID: 1740569859}
   phase1start: {fileID: 1646687174}
   phase2start: {fileID: 472831739}
-  initialPhase: 1
+  initialPhase: 0
 --- !u!1 &105732261
 GameObject:
   m_ObjectHideFlags: 0

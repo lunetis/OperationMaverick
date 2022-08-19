@@ -249,7 +249,7 @@ public class AlertUIController : MonoBehaviour
         if(prevWarningStatus == warningStatus) return;
 
         prevWarningStatus = warningStatus;
-        CancelInvoke();
+        CancelInvoke("BlinkAttackAlertUI");
         HideAllAttackAlertUI();
         alertParent.SetActive(false);
 
