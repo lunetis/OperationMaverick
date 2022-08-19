@@ -14,6 +14,6 @@ public class ResultData
 
     public static int GetTimeBonusScore()
     {
-        return (maxTime - (int)elapsedTime) * timeBonusPerSecond;
+        return Mathf.Max((maxTime - (int)elapsedTime) * timeBonusPerSecond, 0);
     }
 }

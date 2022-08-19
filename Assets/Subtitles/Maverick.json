@@ -253,16 +253,14 @@
         {
             "subtitleKey": "M_AC_2",
             "name": "AWACS Eagle Eye",
-            "side": "A",
-            "invokeMethodName": "FadeOut",
-            "invokeMethodDelay": 5
+            "side": "A"
         },
         {
             "subtitleKey": "M_AC_3",
             "name": "AWACS Eagle Eye",
             "side": "A",
             "invokeMethodName": "FadeOut",
-            "invokeMethodDelay": 3.5
+            "invokeMethodDelay": 3
         },
 
 

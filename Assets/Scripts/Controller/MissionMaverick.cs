@@ -252,7 +252,7 @@ public class MissionMaverick : MissionManager
             // Mission Accomplish
             ResultData.score = GameManager.PlayerAircraft.Score;
             GameManager.Instance.MissionAccomplish();
-            AddScriptRandomly(scriptsOnMissionAccomplish);
+            AddScript(scriptsOnMissionAccomplish);
         }
     }
 
