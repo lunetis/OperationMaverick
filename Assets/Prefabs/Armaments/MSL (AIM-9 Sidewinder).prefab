@@ -118,7 +118,7 @@ MonoBehaviour:
   isSpecialWeapon: 0
   maxSpeed: 270
   accelAmount: 60
-  turningForce: 1.9
+  turningForce: 2
   additionalReleaseSpeed: 15
   smartTrackingRate: 0.7
   boresightAngle: 90

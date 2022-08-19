@@ -38,6 +38,10 @@ public class MissionData : MonoBehaviour
             case GameSettings.Difficulty.ACE:
                 difficultyKey += "ace/";
                 break;
+
+            default:
+                difficultyKey += "normal/";
+                break;
         }
 
         return difficultyXMLData.SelectSingleNode(difficultyKey + key).InnerText;

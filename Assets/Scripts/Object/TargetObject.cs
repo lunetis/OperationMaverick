@@ -194,7 +194,33 @@ public class TargetObject : MonoBehaviour
 
     protected virtual void AdjustValuesByDifficulty()
     {
-        
+        if(Info.VariesHpByDifficulty == true)
+        {
+            switch(GameSettings.difficultySetting)
+            {
+                case GameSettings.Difficulty.EASY:
+                    maxhp = hp = Info.EasyHp;
+                    break;
+                    
+                case GameSettings.Difficulty.NORMAL:
+                    maxhp = hp = Info.NormalHp;
+                    break;
+                    
+                case GameSettings.Difficulty.HARD:
+                    maxhp = hp = Info.HardHp;
+                    break;
+                    
+                case GameSettings.Difficulty.ACE:
+                    maxhp = hp = Info.AceHp;
+                    break;
+
+                default:
+                    maxhp = hp = Info.NormalHp;
+                    break;
+            }
+        }
+
+        Debug.Log("Adjusted hp : " + hp);
     }
 
     void OnDisable()

@@ -3,7 +3,8 @@ guid: b79be4ac48b7a814dbebde7bc2a8c121
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - difficultyXMLFile: {fileID: 4900000, guid: ddf918e725c134e48aafd9f89643b584, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -15,6 +15,12 @@ MonoBehaviour:
   objectName: SU-57
   objectNickname: 
   score: 1000
-  hp: 10
+  hp: 20
   mainTarget: 1
   warningDistance: 120
+  isGroundObject: 0
+  variesHpByDifficulty: 1
+  easyHp: 20
+  normalHp: 20
+  hardHp: 30
+  aceHp: 30

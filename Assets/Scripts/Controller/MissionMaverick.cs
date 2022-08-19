@@ -35,6 +35,9 @@ public class MissionMaverick : MissionManager
     [SerializeField]
     GameObject[] SAMs;
 
+    [SerializeField]
+    GameObject[] additionalSAMs;
+
     List<EnemyWeaponController> SAMControllers;
     List<SAM> SAMScripts;
 
@@ -353,18 +356,42 @@ public class MissionMaverick : MissionManager
         SetEnemyAircraftsActive(false);
     }
 
+
+void AdjustValuesByDifficulty()
+{
+    switch(GameSettings.difficultySetting)
+    {
+        case GameSettings.Difficulty.EASY:      timeLimit = 240; break;
+        case GameSettings.Difficulty.NORMAL:    timeLimit = 195; break;
+        case GameSettings.Difficulty.HARD:      timeLimit = 150; break;
+        case GameSettings.Difficulty.ACE:       timeLimit = 135; break;
+        default:                                timeLimit = 210; break;
+    }
+
+    if(GameSettings.difficultySetting == GameSettings.Difficulty.ACE)
+    {
+        foreach(var SAM in additionalSAMs)
+        {
+            SAMControllers.Add(SAM.GetComponent<EnemyWeaponController>());
+            SAMScripts.Add(SAM.GetComponent<SAM>());
+            targetsEnableOnPhase2.Add(SAM.GetComponent<TargetObject>());
+            SAM.SetActive(true);
+        }
+    }
+    else
+    {
+        foreach(var SAM in additionalSAMs)
+        {
+            SAM.SetActive(false);
+        }
+    }
+}
+    
     protected override void Start()
     {
         hasWarned = false;
 
-        switch(GameSettings.difficultySetting)
-        {
-            case GameSettings.Difficulty.EASY:      timeLimit = 270; break;
-            case GameSettings.Difficulty.NORMAL:    timeLimit = 210; break;
-            case GameSettings.Difficulty.HARD:      timeLimit = 150; break;
-            case GameSettings.Difficulty.ACE:       timeLimit = 135; break;
-            default:                                timeLimit = 210; break;
-        }
+        AdjustValuesByDifficulty();
 
         if(initialPhase > 1)
         {

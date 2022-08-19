@@ -364,18 +364,18 @@ public class GameManager : MonoBehaviour
         DisableAllMissiles();
     }
 
-    public void DisableAllMissiles()
+public void DisableAllMissiles()
+{
+    // Missiles
+    foreach(Transform enemyMissiles in enemyMissileObjectPool.transform)
     {
-        // Missiles
-        foreach(Transform enemyMissiles in enemyMissileObjectPool.transform)
-        {
-            enemyMissiles.gameObject.SetActive(false);
-        }
-        foreach(Transform enemyMissiles in samMissileObjectPool.transform)
-        {
-            enemyMissiles.gameObject.SetActive(false);
-        }
+        enemyMissiles.gameObject.SetActive(false);
     }
+    foreach(Transform enemyMissiles in samMissileObjectPool.transform)
+    {
+        enemyMissiles.gameObject.SetActive(false);
+    }
+}
 
     // Show/Hide Pause UI Canvas, Hide/Show other UIs, Set TimeScale
     public void OnPause(InputAction.CallbackContext context)

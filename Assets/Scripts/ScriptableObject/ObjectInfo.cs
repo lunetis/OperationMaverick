@@ -22,6 +22,18 @@ public class ObjectInfo : ScriptableObject
     [SerializeField]
     bool isGroundObject;
 
+    [SerializeField]
+    bool variesHpByDifficulty = false;
+
+    [SerializeField]
+    int easyHp;
+    [SerializeField]
+    int normalHp;
+    [SerializeField]
+    int hardHp;
+    [SerializeField]
+    int aceHp;
+
     public string ObjectName
     {
         get { return objectName; }
@@ -51,5 +63,27 @@ public class ObjectInfo : ScriptableObject
     public bool IsGroundObject
     {
         get { return isGroundObject; }
+    }
+
+    public bool VariesHpByDifficulty
+    {
+        get { return variesHpByDifficulty; }
+    }
+
+    public int EasyHp
+    {
+        get { return easyHp; }
+    }
+    public int NormalHp
+    {
+        get { return normalHp; }
+    }
+    public int HardHp
+    {
+        get { return hardHp; }
+    }
+    public int AceHp
+    {
+        get { return aceHp; }
     }
 }
