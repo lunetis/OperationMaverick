@@ -159,13 +159,13 @@ public class MissionMaverick : MissionManager
     void SetSAMsActive(bool active)
     {
         hasSAMsActivated = active;
-        foreach(var controller in SAMControllers)
-        {
-            controller.enabled = active;
-        }
         foreach(var script in SAMScripts)
         {
             script.enabled = active;
+        }
+        foreach(var controller in SAMControllers)
+        {
+            controller.enabled = active;
         }
         foreach(var target in targetsEnableOnPhase2)
         {
@@ -352,8 +352,6 @@ public class MissionMaverick : MissionManager
             SAMControllers.Add(SAM.GetComponent<EnemyWeaponController>());
             SAMScripts.Add(SAM.GetComponent<SAM>());
         }
-        SetSAMsActive(false);
-        SetEnemyAircraftsActive(false);
     }
 
 
@@ -392,6 +390,8 @@ void AdjustValuesByDifficulty()
         hasWarned = false;
 
         AdjustValuesByDifficulty();
+        SetSAMsActive(false);
+        SetEnemyAircraftsActive(false);
 
         if(initialPhase > 1)
         {
