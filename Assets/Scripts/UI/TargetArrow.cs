@@ -41,6 +41,8 @@ public class TargetArrow : MonoBehaviour
     Vector2 screenSize;
     float screenAdjustFactor;
 
+	TargetUI targetUI;
+
 	// Recursive search
     Canvas GetCanvas(Transform parentTransform)
     {
@@ -125,6 +127,11 @@ public class TargetArrow : MonoBehaviour
     	GL.End();
 	}
 
+	public void SetTargetUI(TargetUI targetUI)
+	{
+		this.targetUI = targetUI;
+	}
+
  
 	void Awake()
 	{
@@ -153,5 +160,14 @@ public class TargetArrow : MonoBehaviour
 		Vector2 position = screenPoint - screenSize * 0.5f;
 		position *= screenAdjustFactor;
 		textUITransform.anchoredPosition = position;
+
+		if(targetUI != null)
+		{
+			SetArrowVisible(targetUI.IsTargetUIVisible());
+		}
+		else
+		{
+			SetArrowVisible(false);
+		}
     }
 }

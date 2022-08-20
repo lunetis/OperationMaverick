@@ -20,6 +20,11 @@ public class TargetController : MonoBehaviour
         get { return targetLock.IsLocked; }
     }
 
+    public TargetArrow TargetArrow
+    {
+        get { return targetArrow; }
+    }
+
     public void CreateTargetUI(TargetObject targetObject)
     {
         if(targetObject.TargetUI != null) return;

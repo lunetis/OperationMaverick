@@ -78,7 +78,10 @@ public class TargetUI : MonoBehaviour
     Vector2 screenSize;
     float screenAdjustFactor;
     Camera activeCamera;
-    
+
+    bool isOutsideOfCamera;
+    float distance;
+
     // Recursive search
     Canvas GetCanvas(Transform parentTransform)
     {
@@ -97,6 +100,8 @@ public class TargetUI : MonoBehaviour
         this.isTargetted = isTargetted;
         SetBlink(isTargetted);
         frameImage.color = GameManager.NormalColor;
+
+        GameManager.TargetController.TargetArrow.SetTargetUI(this);
     }
 
     void SetBlink(bool blink)
@@ -162,7 +167,7 @@ public class TargetUI : MonoBehaviour
             return;
 
         Vector3 screenPosition = activeCamera.WorldToScreenPoint(targetObject.transform.position);
-        float distance = GameManager.Instance.GetDistanceFromPlayer(targetObject.transform);
+        distance = GameManager.Instance.GetDistanceFromPlayer(targetObject.transform);
         nextTargetText.SetActive(targetObject.isNextTarget);
 
         // if screenPosition.z < 0, the object is behind camera
@@ -178,13 +183,16 @@ public class TargetUI : MonoBehaviour
         }
 
         // the transform is outside of camera view (not behind, we need to consider Field of View)
-        bool isOutsideOfCamera = (screenPosition.z < 0 || 
+        isOutsideOfCamera = (screenPosition.z < 0 || 
                             screenPosition.x < 0 || screenPosition.x > screenSize.x || 
                             screenPosition.y < 0 || screenPosition.y > screenSize.y);
 
 
         uiObject.SetActive(isOutsideOfCamera == false && isInvisible == true && distance < hideDistance);
+    }
 
-        GameManager.TargetController.ShowTargetArrow(targetObject != null && targetObject.IsDestroyed == false && isOutsideOfCamera && distance < hideDistance);
+    public bool IsTargetUIVisible()
+    {
+        return (targetObject.IsDestroyed == false && isOutsideOfCamera && distance < hideDistance);
     }
 }
