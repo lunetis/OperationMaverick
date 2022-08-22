@@ -2,7 +2,7 @@
 
 [![Video Label](http://img.youtube.com/vi/8B3IOTOU7xQ/0.jpg)](https://youtu.be/8B3IOTOU7xQ)
 
-(YouTube Video Link: Current development status at 2022-08-16)
+(YouTube Video Link: Current development status at 2022-08-22)
 
 [[한국어 Readme]](https://github.com/lunetis/OperationMaverick/blob/main/README.kr.md)
 
