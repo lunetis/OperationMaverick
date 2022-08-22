@@ -21,6 +21,7 @@ public class TargetObject : MonoBehaviour
     protected List<Missile> lockedMissiles = new List<Missile>();
     protected bool isWarning;
     
+    [SerializeField]
     protected MinimapSprite minimapSprite;
     protected Collider objectCollider;
     protected bool isDestroyed;
@@ -219,8 +220,6 @@ public class TargetObject : MonoBehaviour
                     break;
             }
         }
-
-        Debug.Log("Adjusted hp : " + hp);
     }
 
     void OnDisable()
@@ -248,13 +247,17 @@ public class TargetObject : MonoBehaviour
         maxhp = hp = objectInfo.HP;
         lastHitLayer = 0;
 
-        for(int i = 0; i < transform.childCount; i++)
+        // Find minimap sprite automatically
+        if(minimapSprite == null)
         {
-            GameObject childObject = transform.GetChild(i).gameObject;
-            if(childObject.layer == LayerMask.NameToLayer("Minimap"))
+            for(int i = 0; i < transform.childCount; i++)
             {
-                minimapSprite = childObject.GetComponent<MinimapSprite>();
-                break;
+                GameObject childObject = transform.GetChild(i).gameObject;
+                if(childObject.layer == LayerMask.NameToLayer("Minimap"))
+                {
+                    minimapSprite = childObject.GetComponent<MinimapSprite>();
+                    break;
+                }
             }
         }
 

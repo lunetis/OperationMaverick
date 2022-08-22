@@ -300,6 +300,7 @@ public class UIController : MonoBehaviour
         if(damage > 0)
         {
             StartCoroutine(alertUIController.ShowDamagedUI());
+            GameManager.CameraController.ShakeCamera();
         }
     }
 

@@ -16,6 +16,9 @@ public class SoundManager : MonoBehaviour
     List<AudioClip> gunHitClips;
 
     [SerializeField]
+    List<AudioClip> flybyClips;
+
+    [SerializeField]
     float distanceMultiplier = 0.001f;
 
     public float DistanceMultiplier
@@ -23,20 +26,31 @@ public class SoundManager : MonoBehaviour
         get { return distanceMultiplier; }
     }
 
+    AudioClip GetClipRandomly(List<AudioClip> clips)
+    {
+        return clips[Random.Range(0, clips.Count)];
+    }
+
     public AudioClip GetMissileLaunchClip()
     {
-        return missileLaunchClips[Random.Range(0, missileLaunchClips.Count)];
+        return GetClipRandomly(missileLaunchClips);
     }
     
     public AudioClip GetExplosionClip()
     {
-        return explosionClips[Random.Range(0, explosionClips.Count)];
+       return GetClipRandomly(explosionClips);
     }
 
     public AudioClip GetGunHitClip()
     {
-        return gunHitClips[Random.Range(0, gunHitClips.Count)];
+        return GetClipRandomly(gunHitClips);
     }
+    
+    public AudioClip GetFlybyClip()
+    {
+        return GetClipRandomly(flybyClips);
+    }
+
 
     void Awake()
     {

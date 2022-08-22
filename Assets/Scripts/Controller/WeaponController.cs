@@ -108,11 +108,13 @@ public class WeaponController : MonoBehaviour
 
     public int SpecialWeaponCnt
     {
-        set { specialWeaponCnt = value; }
+        set
+        {
+            specialWeaponCnt = value;
+            GameManager.UIController.SetSpecialWeaponText(specialWeaponName, specialWeaponCnt);
+        }
     }
 
-    // For vibration
-    Gamepad gamepad;
 
     // Weapon Callbacks
     public void OnFire(InputAction.CallbackContext context)
@@ -137,12 +139,13 @@ public class WeaponController : MonoBehaviour
             case InputActionPhase.Started:
                 InvokeRepeating("FireMachineGun", 0, fireInterval);
                 gunAudio.IsFiring = true;
+                GameManager.GamepadController.isGunFiring = true;
                 break;
 
             case InputActionPhase.Canceled:
                 CancelInvoke("FireMachineGun");
                 gunAudio.IsFiring = false;
-                Vibrate(0);
+                GameManager.GamepadController.isGunFiring = false;
                 break;
         }
     }
@@ -315,7 +318,6 @@ public class WeaponController : MonoBehaviour
         bulletCnt--;
         
         // Vibration
-        Vibrate(vibrateAmount);
         uiController.SetGunText(bulletCnt);
     }
 
@@ -444,15 +446,7 @@ public class WeaponController : MonoBehaviour
         }
     }
 
-    void Vibrate(float vibrateAmount)
-    {
-        // Vibration
-        if(gamepad != null)
-        {
-            gamepad.SetMotorSpeeds(vibrateAmount, vibrateAmount);
-        }
-    }
-
+    
     void SetUIAndTarget(bool playAudio = true)
     {
         Missile switchedMissile = (useSpecialWeapon == true) ? specialWeapon : missile;
@@ -500,7 +494,6 @@ public class WeaponController : MonoBehaviour
     void Awake()
     {
         aircraftController = GetComponent<AircraftController>();
-        gamepad = Gamepad.current;
     }
 
     // Start is called before the first frame update

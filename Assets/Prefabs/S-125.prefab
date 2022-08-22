@@ -4737,6 +4737,7 @@ MonoBehaviour:
   destroyEffect: {fileID: 527982920007072144, guid: e1b08032bec16ba4eb1ae23cbd572664,
     type: 3}
   isNextTarget: 0
+  minimapSprite: {fileID: 5733786891053164180}
   destroyActions:
     m_PersistentCalls:
       m_Calls: []

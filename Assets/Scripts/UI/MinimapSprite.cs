@@ -35,6 +35,10 @@ public class MinimapSprite : MonoBehaviour
         else
         {
             CancelInvoke();
+            if(spriteRenderer == null)
+            {
+                spriteRenderer = GetComponent<SpriteRenderer>();
+            }
             spriteRenderer.color = Color.white;
         }
     }

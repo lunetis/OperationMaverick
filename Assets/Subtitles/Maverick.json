@@ -12,14 +12,14 @@
             "subtitleKey": "M_A0_2",
             "name": "AWACS Eagle Eye",
             "preDelay": 1,
-            "side": "A"
+            "side": "A",
+            "invokeMethodName": "ShowTip1",
+            "invokeMethodDelay": 4.8
         },
         {
             "subtitleKey": "M_A0_3",
             "name": "AWACS Eagle Eye",
-            "side": "A",
-            "invokeMethodName": "ShowTip1",
-            "invokeMethodDelay": 4.5
+            "side": "A"
         },
 
 
@@ -442,7 +442,8 @@
         {
             "subtitleKey": "M_E5_F3",
             "name": "Enemy Squadron",
-            "side": "E"
+            "side": "E",
+            "preDelay": 0.1
         }
     ]
 }

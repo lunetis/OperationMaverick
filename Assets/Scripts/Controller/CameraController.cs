@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using EZCameraShake;
 
 public class CameraController : MonoBehaviour
 {
@@ -55,6 +56,14 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     AudioSource engineAudioSource;
 
+    [Header("Camera shake")]
+    [SerializeField]
+    float shakeMagnitude = 10;
+    [SerializeField]
+    float shakeDuration = 1.5f;
+    [SerializeField]
+    float shakeRoughness = 2.0f;
+
     // UI
     UIController uiController;
     public Transform targetArrowTransform;
@@ -82,8 +91,14 @@ public class CameraController : MonoBehaviour
             if(i == cameraViewIndex)
             {
                 currentCamera = cameras[i];
+                cameras[i].depth = 0;
+                cameras[i].GetComponent<AudioListener>().enabled = true;
             }
-            cameras[i].gameObject.SetActive(i == cameraViewIndex);
+            else
+            {
+                cameras[i].depth = -10;
+                cameras[i].GetComponent<AudioListener>().enabled = false;
+            }
         }
         
         targetArrowTransform.SetParent(currentCamera.transform, false);
@@ -204,13 +219,26 @@ public class CameraController : MonoBehaviour
                 break;
         }
     }
-    
+
+    public void ShakeCamera()
+    {
+        foreach(var cam in cameras)
+        {
+            CameraShaker.GetInstance(cam.name).ShakeOnce(shakeMagnitude, shakeRoughness, 0, shakeDuration);
+        }
+
+        // Vibrate
+        GameManager.GamepadController.VibrateByDamage();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         thirdPivotOriginPosition = thirdViewCameraPivot.localPosition;
         uiController = GameManager.UIController;
+        
         SetCamera();
+        GameManager.GamepadController.DamageVibrateDuration = shakeDuration;
     }
 
     // Update is called once per frame

@@ -96,7 +96,7 @@ public class PlayerAircraft : TargetObject
         GameManager.Instance.GameOver(true, false);
         Invoke("DelayedDestroy", destroyDelay);
 
-        if(contrails != null)
+        if(isDestroyed != true)
         {
             foreach(TrailRenderer trailRenderer in contrails)
             {

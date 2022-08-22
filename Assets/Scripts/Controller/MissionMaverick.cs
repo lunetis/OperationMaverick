@@ -33,26 +33,27 @@ public class MissionMaverick : MissionManager
     int timeLimit;
 
     [SerializeField]
-    GameObject[] SAMs;
+    List<GameObject> SAMs;
 
     [SerializeField]
-    GameObject[] additionalSAMs;
+    List<GameObject> additionalSAMs;
 
     List<EnemyWeaponController> SAMControllers;
     List<SAM> SAMScripts;
+    List<TargetObject> targetObjects;
+
 
     [SerializeField]
     GameObject[] enemyAircrafts;
-
-    [SerializeField]
-    List<TargetObject> targetsEnableOnPhase2;
 
     int remainingEnemyAircraftCnt;
 
     [SerializeField]
     Transform firstEnemyWaypoint;
 
-
+    [SerializeField]
+    [Tooltip("first index must be explosion effect (disabled in checkpoint start)")]
+    List<GameObject> explosionEffects;
 
     [Space(20)]
     [Header("Transcripts")]
@@ -151,6 +152,11 @@ public class MissionMaverick : MissionManager
         // Success: proceed
         else
         {
+            foreach(var effect in explosionEffects)
+            {
+                effect.SetActive(true);
+            }
+
             AddScriptRandomly(scriptsOnHit);
             phase = 2;
         }
@@ -167,7 +173,7 @@ public class MissionMaverick : MissionManager
         {
             controller.enabled = active;
         }
-        foreach(var target in targetsEnableOnPhase2)
+        foreach(var target in targetObjects)
         {
             target.enabled = active;
         }
@@ -344,14 +350,9 @@ public class MissionMaverick : MissionManager
     
     private void Awake()
     {
-        SAMControllers = new List<EnemyWeaponController>(SAMs.Length);
-        SAMScripts = new List<SAM>(SAMs.Length);
-
-        foreach(var SAM in SAMs)
-        {
-            SAMControllers.Add(SAM.GetComponent<EnemyWeaponController>());
-            SAMScripts.Add(SAM.GetComponent<SAM>());
-        }
+        SAMControllers = new List<EnemyWeaponController>(SAMs.Count);
+        SAMScripts = new List<SAM>(SAMs.Count);
+        targetObjects = new List<TargetObject>(SAMs.Count);
     }
 
 
@@ -368,13 +369,7 @@ void AdjustValuesByDifficulty()
 
     if(GameSettings.difficultySetting == GameSettings.Difficulty.ACE)
     {
-        foreach(var SAM in additionalSAMs)
-        {
-            SAMControllers.Add(SAM.GetComponent<EnemyWeaponController>());
-            SAMScripts.Add(SAM.GetComponent<SAM>());
-            targetsEnableOnPhase2.Add(SAM.GetComponent<TargetObject>());
-            SAM.SetActive(true);
-        }
+        SAMs.AddRange(additionalSAMs);
     }
     else
     {
@@ -390,6 +385,14 @@ void AdjustValuesByDifficulty()
         hasWarned = false;
 
         AdjustValuesByDifficulty();
+
+        foreach(var SAM in SAMs)
+        {
+            SAMControllers.Add(SAM.GetComponent<EnemyWeaponController>());
+            SAMScripts.Add(SAM.GetComponent<SAM>());
+            targetObjects.Add(SAM.GetComponent<TargetObject>());
+        }
+
         SetSAMsActive(false);
         SetEnemyAircraftsActive(false);
 
@@ -417,6 +420,15 @@ void AdjustValuesByDifficulty()
             GameManager.PlayerAircraft.transform.SetPositionAndRotation(phase2start.position, phase2start.rotation);
             // You can't use special weapon at phase 2
             GameManager.WeaponController.SpecialWeaponCnt = 0;
+
+            foreach(var effect in explosionEffects)
+            {
+                // first index must be explosion effect (disabled in checkpoint start)
+                if(effect != explosionEffects[0])
+                {
+                    effect.SetActive(true);
+                }
+            }
         }
     }
 

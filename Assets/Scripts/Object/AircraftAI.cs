@@ -273,7 +273,10 @@ void CheckGroundCollision()
     Physics.Raycast(transform.position, transform.forward, out hit, 200, layerMask);
     if(hit.distance > 0)
     {
-        ForceChangeWaypoint(transform.position + Vector3.up * 50);
+        Vector3 reverseDirection = transform.forward;
+        reverseDirection.y = 0;
+        reverseDirection = reverseDirection.normalized * 100;
+        ForceChangeWaypoint(transform.position + Vector3.up * 50 + reverseDirection);
         
         // Quick Turn
         currentTurningForce = 2.5f;

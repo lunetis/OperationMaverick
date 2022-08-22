@@ -42,6 +42,8 @@ public class GameManager : MonoBehaviour
     TargetController targetController;
     [SerializeField]
     WeaponController weaponController;
+    [SerializeField]
+    GamepadController gamepadController;
 
     
     [Header("Mission Managers")]
@@ -140,6 +142,11 @@ public class GameManager : MonoBehaviour
     public static WeaponController WeaponController
     {
         get { return Instance?.weaponController; }
+    }
+
+    public static GamepadController GamepadController
+    {
+        get { return Instance?.gamepadController; }
     }
 
     public static ScriptManager ScriptManager
