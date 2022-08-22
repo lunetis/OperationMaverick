@@ -53,6 +53,7 @@ Since **ACE COMBAT 7 Font is made for "ACE COMBAT™ 7: SKIES UNKNOWN" exclusive
 
 ## Misc.
 
+- EZ Camera Shake: created by Anderson Addo, https://github.com/andersonaddo/EZ-Camera-Shake-Unity
 - Screen Space Multiple Scattering for Unity : created by Keijiro Takahashi, OCASM, https://github.com/OCASM/SSMS (MIT License)
 - All voices were from ACE COMBAT ZERO: THE BELKAN WAR.
 
