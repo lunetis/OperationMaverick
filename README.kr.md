@@ -1,8 +1,12 @@
 # Operation Maverick
 
+[![Video Label](http://img.youtube.com/vi/8B3IOTOU7xQ/0.jpg)](https://youtu.be/8B3IOTOU7xQ)
+
+(YouTube Video Link: Current development status at 2022-08-22)
+
 [[English Readme]](https://github.com/lunetis/OperationMaverick/blob/main/README.md)
 
-탑건: 매버릭의 미션을 유니티 엔진으로 구현하는 프로젝트입니다.
+영화 탑건: 매버릭과 비슷한 미션을 유니티 엔진으로 구현하는 프로젝트입니다.
 
 - __Editor version: 2020.2.3f1__
 - __프로젝트를 확인하기 위해서는 [Blender](https://www.blender.org/download/)를 설치해주세요.__
@@ -23,8 +27,8 @@
 - [x] 미션 구현
 - [x] 대사 추가
 - [x] 메인/결과 화면
-- [ ] 난이도 추가
-- [ ] 빌드
+- [x] 난이도 추가
+- [x] 빌드
 
 <br>
 
