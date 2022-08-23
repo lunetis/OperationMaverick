@@ -15,6 +15,12 @@ MonoBehaviour:
   objectName: F-15C
   objectNickname: PIXY
   score: 1000
-  hp: 30
+  hp: 1000
   mainTarget: 1
   warningDistance: 100
+  isGroundObject: 0
+  variesHpByDifficulty: 0
+  easyHp: 0
+  normalHp: 0
+  hardHp: 0
+  aceHp: 0

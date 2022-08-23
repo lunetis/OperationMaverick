@@ -74,6 +74,9 @@ public class GamepadController : MonoBehaviour
 
     void OnDisable()
     {
-        gamepad.SetMotorSpeeds(0, 0);
+        if(gamepad != null)
+        {
+            gamepad.SetMotorSpeeds(0, 0);
+        }
     }
 }

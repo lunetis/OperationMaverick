@@ -442,7 +442,11 @@ public class WeaponController : MonoBehaviour
         {
             useSpecialWeapon = !useSpecialWeapon;
             SetUIAndTarget();
-            specialWeaponScript.enabled = useSpecialWeapon;
+
+            if(specialWeaponScript != null)
+            {
+                specialWeaponScript.enabled = useSpecialWeapon;
+            }
         }
     }
 
