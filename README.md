@@ -32,7 +32,7 @@
 
 <br>
 
-- [ ] Mission Cutscenes (Optional)
+~- Mission Cutscenes (Optional)~ (Cancelled)
 
 <br>
 
