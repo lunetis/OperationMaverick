@@ -8,7 +8,7 @@
 
 영화 탑건: 매버릭과 비슷한 미션을 유니티 엔진으로 구현하는 프로젝트입니다.
 
-- __Editor version: 2020.2.3f1__
+- __Editor version: 2021.3.6f1
 - __프로젝트를 확인하기 위해서는 [Blender](https://www.blender.org/download/)를 설치해주세요.__
 
 <br>
