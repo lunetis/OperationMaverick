@@ -12,9 +12,9 @@ Assets not created by project owner are subject to the license set by the develo
 - F-15C Pixy 3D Model : created by Uxman, https://skfb.ly/6UY9O (CC BY 4.0)
 - F-15C Wireframe Picture : created by username_copied, http://getdrawings.com/get-drawing#f-15-drawing-29.jpg (CC BY-NC 4.0)
 - E-767 (AWACS) 3D Model : created by AmtrakP42DC, https://3dwarehouse.sketchup.com/model/98c0c90dcce8f9ee3ba77af508a192c0/AWACS-E767
-- FA-18E 3D Model : https://www.cadnav.com/3d-models/model-46195.html
+- FA-18E 3D Model : https://www.cadnav.com/3d-models/model-46195.html (Non-commercial use only)
 - FA-18C Wireframe Picture : captured from http://thanlont.blogspot.com/2011/04/natf-better-is-enemy-of-good-enough.html
-- Su-57 3D Model : https://www.cadnav.com/3d-models/model-47323.html
+- Su-57 3D Model : https://www.cadnav.com/3d-models/model-47323.html (Non-commercial use only)
 
 ## Armaments
 
@@ -23,7 +23,7 @@ Assets not created by project owner are subject to the license set by the develo
 - AIM-120D Sidewinder (currently unused) : created by Bramsh 3D, https://skfb.ly/6WNYQ (CC BY 4.0)
 - V2 Missile : created by Diccbudd, https://skfb.ly/6YZCS (CC BY 4.0)
 - GBU-24 (Laser Guided Bomb) : created by AnirudhRao, https://skfb.ly/6Cr7C (CC BY 4.0)
-- S-125 (Surface-to-Air Missile) : created by Archedyne, https://3dwarehouse.sketchup.com/model/u34101f72-fb6d-4b90-97a0-cf19fed51c03/S-125-SA-3-GOA-launcher (
+- S-125 (Surface-to-Air Missile) : created by Archedyne, https://3dwarehouse.sketchup.com/model/u34101f72-fb6d-4b90-97a0-cf19fed51c03/S-125-SA-3-GOA-launcher
 
 ## Map/Terrain Components
 
@@ -48,7 +48,7 @@ Since **ACE COMBAT 7 Font is made for "ACE COMBAT™ 7: SKIES UNKNOWN" exclusive
 
 ### Musics were not uploaded due to copyright issues. (Build / YouTube video only)
 
-- ZERO : Composed by Kobayashi Keiki, ℗ BANDAI NAMCO Entertainment Inc.
+- Werewolf : Composed by Hiroshi Okubo, ℗ BANDAI NAMCO Entertainment Inc.
 - Main Theme (From ACE COMBAT 7) : Composed by Mitsuhiro Kitadani, ℗ BANDAI NAMCO Entertainment Inc.
 
 ## Misc.
